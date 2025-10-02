@@ -1,0 +1,48 @@
+#bartoszyce {
+    border: 2px solid black;
+    font-weight: bold;
+    padding: 10px 20px;
+    margin: 10px auto;
+    display: block;
+    background-color: darkgoldenrod;
+}
+
+body {
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.header, .footer {
+  border: 2px solid black;
+  padding: 10px;
+  height: 10%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.main {
+  display: flex;
+  flex: 1;
+}
+
+.leftside, .rightside {
+  width: 10%;
+  border: 2px solid black;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.container {
+  flex: 1;
+  border: 2px solid black;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
