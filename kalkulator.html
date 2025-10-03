@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="authors" content="scorchinRebar, chińczyk, majomajo112">
+    <link rel="stylesheet" href="style.css">
+    <title>Przelicznik Talonów</title>
+</head>
+<body>
+    <div id="page">
+        
+        <div id="headerAndNav">
+            <header id="header">
+                <img src="img/header.png" alt="header Talonowo">
+            </header>
+
+            <div id="navGroup">
+                <div onclick="openSite(this)" class="nav" id="nav1"><h3>ZASADY</h3>             <h3>(*IKONKA*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav2"><h3>work in progress</h3>   <h3>(*IKONKA*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav3"><h3>KALKULATOR</h3>         <h3>(*IKONKA*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav4"><h3>work in progress</h3>   <h3>(*IKONKA*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav5"><h3>AUTORZY</h3>            <h3>(*IKONKA*)</h3></div>
+            </div>
+        </div>
+
+        <div id="mainContent">
+            <h2>Przelicznik walut</h2>
+
+            <label for="ilosc">Ilość:</label>
+            <input type="number" id="ilosc" min="1">
+
+            <label for="z">Z:</label>
+            <select id="z">
+              <option value="talon">talon</option>
+              <option value="taloniasz">taloniasz</option>
+              <option value="talonior">talonior</option>
+            </select>
+        
+
+            <label for="na">Na:</label>
+            <select id="na">
+              <option value="talon">talon</option>
+              <option value="taloniasz">taloniasz</option>
+              <option value="talonior">talonior</option>
+            </select>
+        
+            <button onclick="przelicz()">Przelicz</button>
+        
+            <p id="wynik"></p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
