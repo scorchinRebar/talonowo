@@ -98,10 +98,11 @@ body {
 }
 
 #bartoszyce {
-    border: 2px solid black;
-    font-weight: bold;
-    padding: 10px 20px;
-    margin: 10px auto;
-    display: block;
-    background-color: darkgoldenrod;
+  border: 2px solid black;
+  font-weight: bold;
+  padding: 10px 20px;
+  margin: 10px auto;
+  display: block;
+  background-color: darkgoldenrod;
+  cursor: pointer;
 }
