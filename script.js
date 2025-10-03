@@ -19,30 +19,31 @@ function openSite(nav) {
             break;
         
         default:
+            console.log('przekazano zły nav.id');
             break;
     }
 }
 
 function przelicz() {
-      const ilosc = parseInt(document.getElementById("ilosc").value);
-      const walutaZ = document.getElementById("z").value;
-      const walutaNa = document.getElementById("na").value;
-      const poleWyniku = document.getElementById("wynik");
+    const ilosc = parseInt(document.getElementById("ilosc").value);
+    const walutaZ = document.getElementById("z").value;
+    const walutaNa = document.getElementById("na").value;
+    const poleWyniku = document.getElementById("wynik");
 
-      let wynik;
+    let wynik;
 
-      if (walutaZ === "taloniasz" && walutaNa === "talon") {
-        wynik = ilosc * 2; 
-      } else if (walutaZ === "talonior" && walutaNa === "taloniasz") {
-        wynik = ilosc * 2; 
-      } else if (walutaZ === "talonior" && walutaNa === "talon") {
-        wynik = ilosc * 4; 
-      } else if (walutaZ === walutaNa) {
-        wynik = ilosc; 
-      } else {
-        poleWyniku.textContent = "Sorry, chyba zapomiałeś zasad wymian walut. Idz se przypomnij";
-        return;
-      }
-
-      poleWyniku.textContent = `${ilosc} ${walutaZ} = ${wynik} ${walutaNa}`;
+    if (walutaZ === "taloniasz" && walutaNa === "talon") {
+      wynik = ilosc * 2; 
+    } else if (walutaZ === "talonior" && walutaNa === "taloniasz") {
+      wynik = ilosc * 2; 
+    } else if (walutaZ === "talonior" && walutaNa === "talon") {
+      wynik = ilosc * 4; 
+    } else if (walutaZ === walutaNa) {
+      wynik = ilosc; 
+    } else {
+      poleWyniku.textContent = "Sorry, chyba zapomiałeś zasad wymian walut. Idz se przypomnij";
+      return;
     }
+
+    poleWyniku.textContent = `${ilosc} ${walutaZ} = ${wynik} ${walutaNa}`;
+}

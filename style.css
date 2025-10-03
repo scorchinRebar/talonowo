@@ -4,6 +4,15 @@
   box-sizing: border-box;
 }
 
+.paleta{
+  background-color: rgba(251, 202, 65);
+  background-color: rgba(251, 186, 4);
+  background-color: rgba(220, 162, 4);
+  background-color: rgba(37, 37, 45);
+  background-color: rgba(18, 18, 23);
+  background-color: rgba(6, 6, 8);
+}
+
 body {
   width: 100vw;
   height: 100vh;
@@ -16,7 +25,7 @@ body {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  background-color: rgb(165, 164, 164);
+  background-color: rgba(6, 6, 8);
 }
 
 #headerAndNav {
@@ -59,7 +68,7 @@ body {
   width: 16%;
   height: 100%;
   border-radius: 0 0 25px 25px;
-  background-color: rgba(165, 68, 255, 0.74);
+  background-color: rgba(251, 202, 65);
   position: absolute;
   transform: translateY(30%);
   cursor: pointer;
@@ -71,7 +80,7 @@ body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 18px;
   font-weight: bold;
-  color: coral;
+  color: rgba(6, 6, 8);
   text-align: center;
   transition: ease-in-out;
   transition-duration: 0.3s;
@@ -94,7 +103,8 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgb(58, 81, 95);
+  background-color: rgba(37, 37, 45);
+  color: rgba(251, 202, 65);
 }
 
 #bartoszyce {
@@ -103,6 +113,17 @@ body {
   padding: 10px 20px;
   margin: 10px auto;
   display: block;
-  background-color: darkgoldenrod;
+  background-color: rgba(220, 162, 4);
   cursor: pointer;
+}
+
+
+/* KALKULATOR.HTML */
+
+input, select, option, #calc {
+  border: 0;
+  border-radius: 15px;
+  padding: 10px;
+  background-color: rgba(6, 6, 8);
+  color: rgb(220, 162, 4);
 }
