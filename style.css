@@ -1,3 +1,102 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+}
+
+#page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: rgb(165, 164, 164);
+}
+
+#headerAndNav {
+  width: 70%;
+  height: 15%;
+  position: relative;
+  background-color: rgb(217, 184, 248);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0 0 40px 40px;
+}
+
+#header {
+  width: 100%;
+  height: 100%;
+  background-color: rgb(194, 138, 247);
+  z-index: 20;
+  border-radius: 0 0 40px 40px;
+}
+
+#header img {
+  width: 100%;
+  height: 100%;
+  border-radius: 0 0 40px 40px;
+}
+
+#navGroup {
+  width: 91%;
+  height: 100%;
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+/*Ale jest kurwa batalia tutaj daj spokój*/
+.nav {
+  width: 16%;
+  height: 100%;
+  border-radius: 0 0 25px 25px;
+  background-color: rgba(165, 68, 255, 0.74);
+  position: absolute;
+  transform: translateY(30%);
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px 0 12px 0;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: coral;
+  text-align: center;
+  transition: ease-in-out;
+  transition-duration: 0.3s;
+}
+
+#nav1 { left: 0%; }
+#nav2 { left: 21%; }
+#nav3 { left: 42%; }
+#nav4 { left: 63%; }
+#nav5 { left: 84%; }
+
+.nav:hover {
+  transform: translateY(100%);
+}
+
+#mainContent {
+  width: 100%;
+  height: 85%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(58, 81, 95);
+}
+
 #bartoszyce {
     border: 2px solid black;
     font-weight: bold;
@@ -5,44 +104,4 @@
     margin: 10px auto;
     display: block;
     background-color: darkgoldenrod;
-}
-
-body {
-  margin: 0;
-  font-family: sans-serif;
-}
-
-.page {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.header, .footer {
-  border: 2px solid black;
-  padding: 10px;
-  height: 10%;
-  text-align: center;
-  font-weight: bold;
-}
-
-.main {
-  display: flex;
-  flex: 1;
-}
-
-.leftside, .rightside {
-  width: 10%;
-  border: 2px solid black;
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
-}
-
-.container {
-  flex: 1;
-  border: 2px solid black;
-  padding: 10px;
-  text-align: center;
-  font-weight: bold;
 }

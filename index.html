@@ -8,21 +8,36 @@
     <title>Talonowo</title>
 </head>
 <body>
-    <div class="page">
-        <div class="header">
-            <h1>Ta strona internetowa jest jeszcze podczas konstrukcji. Spodziewam się cierpliwości z waszej strony. Bo inaczej siła cytatu was porwie.</h1>
-        </div>
-        <div class="main">
-            <div class="leftside">
-                <button onclick="window.location.href='https://www.tiktok.com/@silacytatu?lang=pl-PL';" id="bartoszyce">beng</button>
-            </div>
-            <div class="container"></div>
-            <div class="rightside"></div>
-        </div>
-        <div class="footer">
-            <p>Copyright &copy; 2025 scorchinRebar, Chińczyk & majomajo112</p>
-        </div>
-</div>
+    <div id="page">
+        
+        <div id="headerAndNav">
+            <header id="header">
+                <img src="img/header.png" alt="header Talonowo">
+            </header>
 
+            <div id="navGroup">
+                <div onclick="openSite(this)" class="nav" id="nav1"><h3>ZASADY</h3>             <h3>(*IKONKA*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav2"><h3>work in progress</h3>   <h3>(*IKONKA*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav3"><h3>KALKULATOR</h3>         <h3>(*IKONKA*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav4"><h3>work in progress</h3>   <h3>(*IKONKA*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav5"><h3>AUTORZY</h3>            <h3>(*IKONKA*)</h3></div>
+            </div>
+        </div>
+
+        <div id="mainContent">
+            zawartość strony bang
+            <br><br>
+            <h1><em>KOLORY PODGLĄDOWE GŁÓWNEGO TECHNIKA majomajo112 - NIE ODZWIERCIEDLAJĄ FINAŁOWEGO WYGLĄDU</em></h1>
+            <br><br>
+            <button onclick="window.location.href = 'https://www.tiktok.com/@silacytatu?lang=pl-PL'" id="bartoszyce">beng</button>
+        </div>
+
+    </div>
+
+    <script>
+    function openSite(nav) {
+        console.log("bang " + nav.id);
+    }
+    </script>
 </body>
 </html>
