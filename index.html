@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="authors" content="scorchinRebar, chińczyk, majomajo112">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script type="module" src="supabase.js"></script>
     <link rel="stylesheet" href="style.css">
     <title>Talonowo</title>
 </head>
@@ -16,23 +18,44 @@
             </header>
 
             <div id="navGroup">
-                <div onclick="openSite(this)" class="nav" id="nav1"><h3>ZASADY</h3>             <h3>(*IK. ZASAD.*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav1"><h3>ZASADY</h3>             <h3>(*IKONKA*)</h3></div>
                 <div onclick="openSite(this)" class="nav" id="nav2"><h3>work in progress</h3>   <h3>(*IKONKA*)</h3></div>
-                <div onclick="openSite(this)" class="nav" id="nav3"><h3>KALKULATOR</h3>         <h3>(*IK. KALK.*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav3"><h3>KALKULATOR</h3>         <h3>(*IKONKA*)</h3></div>
                 <div onclick="openSite(this)" class="nav" id="nav4"><h3>work in progress</h3>   <h3>(*IKONKA*)</h3></div>
-                <div onclick="openSite(this)" class="nav" id="nav5"><h3>AUTORZY</h3>            <h3>(*IK. AUTOR.*)</h3></div>
+                <div onclick="openSite(this)" class="nav" id="nav5"><h3>AUTORZY</h3>            <h3>(*IKONKA*)</h3></div>
             </div>
         </div>
 
         <div id="mainContent">
             zawartość strony bang
             <br><br>
-            <h1><em>KOLORY ZBLIŻONE DO ZAMIERZANEGO EFEKTU KOŃCOWEGO - MOŻE ULEC ZMIANIE</em></h1>
+            <h1><em>KOLORY PODGLĄDOWE GŁÓWNEGO TECHNIKA majomajo112 - NIE ODZWIERCIEDLAJĄ FINAŁOWEGO WYGLĄDU</em></h1> <br><br>
+            <form id="signup-form">
+                <input type="email" id="email" placeholder="Email" required />
+                <input type="password" id="password" placeholder="Password" required />
+            <button type="submit">Sign Up</button>
+            </form> <br><br>
+            <form id="login-form">
+                <input type="email" id="login-email" placeholder="Email" required />
+                <input type="password" id="login-password" placeholder="Password" required />
+            <button type="submit">Log In</button>
+            </form> <br><br>
+
+            <p id="role-status">Checking role...</p>
+            
+
+
             <br><br>
             <button onclick="window.location.href = 'https://www.tiktok.com/@silacytatu?lang=pl-PL'" id="bartoszyce">beng</button>
         </div>
+
     </div>
 
-    <script src="script.js"></script>
+    <script>
+    function openSite(nav) {
+        console.log("bang " + nav.id);
+    }
+    </script>
 </body>
 </html>
+
