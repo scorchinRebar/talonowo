@@ -15,7 +15,7 @@ function openSite(nav) {
             // window.location.href = '';
             break;
         case 'nav5':
-            // window.location.href = ''
+            window.location.href = 'autorzy.html'
             break;
         
         default:
