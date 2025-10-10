@@ -1,21 +1,74 @@
 function openSite(nav) {
+
+  let currentNav = nav.id;
+
+    let slider = document.getElementById('slider');
     console.log(nav.id);
 
     switch (nav.id) {
         case 'nav1':
-            window.location.href = 'index.html';
+                fetch ('zasady.html')
+                .then(response => response.text())
+                .then(data => {
+                  document.getElementById('slider').innerHTML = data;
+
+                    slider.style.transitionDuration = '0.5s';
+                    slider.style.transform = 'translateY(18%)'
+
+                    slider.addEventListener('transitionend', () => {
+                      slider.style.transitionDuration = '0s';
+                      slider.style.transform = 'translateY(-101%)';
+                      document.getElementById('mainContent').innerHTML = data;
+                      document.getElementById('slider').innerHTML = '';
+                    });
+                    
+                });
             break;
+
         case 'nav2':
             // window.location.href = '';
             break;
+
         case 'nav3':
-            window.location.href = 'kalkulator.html';
+            fetch ('kalkulator.html')
+                .then(response => response.text())
+                .then(data => {
+                  document.getElementById('slider').innerHTML = data;
+
+                    slider.style.transitionDuration = '0.5s';
+                    slider.style.transform = 'translateY(18%)'
+
+                    slider.addEventListener('transitionend', () => {
+                      slider.style.transitionDuration = '0s';
+                      slider.style.transform = 'translateY(-101%)';
+                      document.getElementById('mainContent').innerHTML = data;
+                      document.getElementById('slider').innerHTML = '';
+                    });
+                    
+                });
             break;
+
         case 'nav4':
             // window.location.href = '';
             break;
+
         case 'nav5':
-            window.location.href = 'autorzy.html'
+            fetch ('autorzy.html')
+                .then(response => response.text())
+                .then(data => {
+                  document.getElementById('slider').innerHTML = data;
+
+                    slider.style.transitionDuration = '0.5s';
+                    slider.style.transform = 'translateY(18%)'
+
+                    slider.addEventListener('transitionend', () => {
+                      slider.style.transitionDuration = '0s';
+                      slider.style.transform = 'translateY(-101%)';
+                      document.getElementById('mainContent').innerHTML = data;
+                      document.getElementById('slider').innerHTML = '';
+                    });
+                    
+                });
             break;
         
         default:
