@@ -7,17 +7,20 @@ function openSite(nav) {
 
     switch (nav.id) {
         case 'nav1':
+          slider.style.clipPath = 'inset(0% 73% 90% 20%)'
                 fetch ('zasady.html')
                 .then(response => response.text())
                 .then(data => {
                   document.getElementById('slider').innerHTML = data;
 
-                    slider.style.transitionDuration = '0.5s';
-                    slider.style.transform = 'translateY(18%)'
+                    slider.style.transitionDuration = '1s';
+                    slider.style.transform = 'translateY(17.6%)'
+                    slider.style.clipPath = 'inset(0% 0% 0% 0%)'
 
                     slider.addEventListener('transitionend', () => {
                       slider.style.transitionDuration = '0s';
-                      slider.style.transform = 'translateY(-101%)';
+                      slider.style.transform = 'translateY(-30%)';
+                      slider.style.clipPath = 'inset(0% 73% 90% 20%)'
                       document.getElementById('mainContent').innerHTML = data;
                       document.getElementById('slider').innerHTML = '';
                     });
@@ -30,17 +33,20 @@ function openSite(nav) {
             break;
 
         case 'nav3':
+          slider.style.clipPath = 'inset(0% 46% 90% 46%)'
             fetch ('kalkulator.html')
                 .then(response => response.text())
                 .then(data => {
                   document.getElementById('slider').innerHTML = data;
 
-                    slider.style.transitionDuration = '0.5s';
-                    slider.style.transform = 'translateY(18%)'
+                    slider.style.transitionDuration = '1s';
+                    slider.style.transform = 'translateY(17.6%)'
+                    slider.style.clipPath = 'inset(0% 0% 0% 0%)'
 
                     slider.addEventListener('transitionend', () => {
                       slider.style.transitionDuration = '0s';
-                      slider.style.transform = 'translateY(-101%)';
+                      slider.style.transform = 'translateY(-30%)';
+                      slider.style.clipPath = 'inset(0% 46% 90% 46%)'
                       document.getElementById('mainContent').innerHTML = data;
                       document.getElementById('slider').innerHTML = '';
                     });
@@ -53,17 +59,20 @@ function openSite(nav) {
             break;
 
         case 'nav5':
+          slider.style.clipPath = 'inset(0% 20% 90% 73%)'
             fetch ('autorzy.html')
                 .then(response => response.text())
                 .then(data => {
                   document.getElementById('slider').innerHTML = data;
 
-                    slider.style.transitionDuration = '0.5s';
-                    slider.style.transform = 'translateY(18%)'
+                    slider.style.transitionDuration = '1s';
+                    slider.style.transform = 'translateY(17.6%)'
+                    slider.style.clipPath = 'inset(0% 0% 0% 0%)'
 
                     slider.addEventListener('transitionend', () => {
                       slider.style.transitionDuration = '0s';
-                      slider.style.transform = 'translateY(-101%)';
+                      slider.style.transform = 'translateY(-30%)';
+                      slider.style.clipPath = 'inset(0% 20% 90% 73%)'
                       document.getElementById('mainContent').innerHTML = data;
                       document.getElementById('slider').innerHTML = '';
                     });
