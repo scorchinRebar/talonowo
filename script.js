@@ -96,84 +96,40 @@ function openSite(nav) {
     case 'nav4':
       currentNav = 'nav4'
       slider.style.clipPath = 'inset(0% 33% 90% 60%)'
-        fetch('ryby.html')
-        .then(response => response.text())
-        .then(data => {
-          const slider = document.getElementById('slider');
-          const mainContent = document.getElementById('mainContent');
-        
-          // 1️⃣ Animacja przejścia
-          slider.innerHTML = data;
-          slider.style.transitionDuration = '1s';
-          slider.style.transform = 'translateY(17.6%)';
-          slider.style.clipPath = 'inset(0% 0% 0% 0%)';
-        
-          // 2️⃣ Po zakończeniu animacji (lub po 1s, dla pewności)
-          setTimeout(() => {
-            slider.style.transitionDuration = '0s';
-            slider.style.transform = 'translateY(-30%)';
-            slider.style.clipPath = 'inset(0% 33% 90% 60%)';
-            mainContent.innerHTML = data;
-            slider.innerHTML = '';
-          
-            // 3️⃣ Upewnij się, że stara gra została zatrzymana (jeśli była)
-            if (window.fishGameProcessingInstance) {
-              console.log('Zatrzymuję starą instancję gry...');
-              try {
-                window.fishGameProcessingInstance.exit();
-              } catch (e) {
-                console.warn('Nie udało się zatrzymać poprzedniej instancji:', e);
+        fetch ('ryby.html')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('slider').innerHTML = data;
+
+            slider.style.transitionDuration = '1s';
+            slider.style.transform = 'translateY(17.6%)'
+            slider.style.clipPath = 'inset(0% 0% 0% 0%)'
+
+            setTimeout(() => {
+              slider.style.transitionDuration = '0s';
+              slider.style.transform = 'translateY(-30%)';
+              slider.style.clipPath = 'inset(0% 33% 90% 60%)'
+              document.getElementById('mainContent').innerHTML = data;
+              document.getElementById('slider').innerHTML = '';
+
+              //Fetch nie wczytuje skryptów JS, dlatego trzeba je dodać osobno
+              if (!window.fishGameProcessingInstance) {
+                requestAnimationFrame(function() {
+                  let script1 = document.createElement('script');
+                  script1.src = 'data/processing.min.js';
+                  script1.classList.add('dynamic-script');
+
+                  script1.onload = function() {
+                    let script2 = document.createElement('script');
+                    script2.src = 'fishGame.js';
+                    script2.classList.add('dynamic-script');
+                    document.body.appendChild(script2);
+                  };
+
+                  document.body.appendChild(script1);
+                });
               }
-              window.fishGameProcessingInstance = null;
-            }
-          
-            // 4️⃣ Ładowanie Processing i gry — tylko jeśli nie są już obecne
-            const loadFishGame = () => {
-              console.log('⏳ Próba inicjalizacji gry...');
-              const canvas = document.getElementById('mycanvas');
-              if (canvas && window.Processing && typeof programCode === 'function') {
-                console.log('✅ Canvas i Processing dostępne — tworzę instancję');
-                window.fishGameProcessingInstance = new Processing(canvas, programCode);
-                console.log('🎮 ProcessingJS instance created:', window.fishGameProcessingInstance);
-              } else {
-                // Ponawiaj próbę co 100 ms aż wszystko będzie gotowe
-                setTimeout(loadFishGame, 100);
-              }
-            };
-          
-            // 5️⃣ Dynamiczne ładowanie bibliotek
-            if (!window.Processing) {
-              let script1 = document.createElement('script');
-              script1.src = 'data/processing.min.js?v=' + Date.now(); // +Date.now() zapobiega cache
-              script1.classList.add('dynamic-script');
-              script1.onload = function() {
-                console.log('✅ processing.min.js loaded');
-              
-                let script2 = document.createElement('script');
-                script2.src = 'fishGame.js?v=' + Date.now();
-                script2.classList.add('dynamic-script');
-                script2.onload = function() {
-                  console.log('✅ fishGame.js loaded');
-                  loadFishGame();
-                };
-              
-                document.body.appendChild(script2);
-              };
-            
-              document.body.appendChild(script1);
-            } else {
-              console.log('Processing już załadowany, tylko ładuję fishGame.js');
-              let script2 = document.createElement('script');
-              script2.src = 'fishGame.js?v=' + Date.now();
-              script2.classList.add('dynamic-script');
-              script2.onload = function() {
-                console.log('✅ fishGame.js loaded');
-                loadFishGame();
-              };
-              document.body.appendChild(script2);
-            }
-          
-          }, 1000);
+            }, 1000);
         });
         break;
 

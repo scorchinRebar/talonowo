@@ -1,4 +1,4 @@
-console.log('Processing global?', typeof Processing);
+ console.log('Processing global?', typeof Processing);
  //WŁASNOŚĆ PATRYKA P. AKA majomajo112 ALL RIGHTS RESERVED
  // Funkcja programCode zawiera kod programu napisanego w języku Processing
 var programCode = function(processingInstance) {
@@ -157,17 +157,17 @@ Rod.prototype.ifCollision = function(y) {
 
 //konstruktor cząstek przy minigierce
 var miniGameParticle = function() {
-    this.position = new PVector(greenRect + 40, random(300, 350));
-    this.size = random(6, 12);
-    this.velocity = new PVector(random(-1, 0), random(-1, 0));    //prędkość - cząsteczki początkowo "wyrzuca" w lewo i lekko w górę
+    this.position = new PVector(greenRect + 40, processingInstance.random(300, 350));
+    this.size = processingInstance.random(6, 12);
+    this.velocity = new PVector(processingInstance.random(-1, 0), processingInstance.random(-1, 0));    //prędkość - cząsteczki początkowo "wyrzuca" w lewo i lekko w górę
     this.acceleration = new PVector(0, 0.03);   //przyspieszenie ściąga cząsteczki w dół
 
     this.alpha = 255; //przezroczystość cząsteczek
 
     //różne odcienie zieleni
-    if (random(1) > 0.66) {
+    if (processingInstance.random(1) > 0.66) {
         this.color = color(0, 180, 0);       
-    } else if (random(1) > 0.33) {
+    } else if (processingInstance.random(1) > 0.33) {
         this.color = color(0, 200, 0);
     } else {
         this.color = color(0, 220, 0);
@@ -191,9 +191,9 @@ miniGameParticle.prototype.update = function() {
 
 //cząsteczki imitujące bąbelki wodne
 var bubblesParticle = function() {
-    this.position = new PVector(random(10, 390), random(140, 370));
-    this.size = random(4, 8);
-    this.velocity = new PVector(random(0, 0), random(-0.2, 0));
+    this.position = new PVector(processingInstance.random(10, 390), processingInstance.random(140, 370));
+    this.size = processingInstance.random(4, 8);
+    this.velocity = new PVector(processingInstance.random(0, 0), processingInstance.random(-0.2, 0));
     
     this.acceleration = new PVector(0, -0.005);
 };
@@ -215,9 +215,9 @@ bubblesParticle.prototype.update = function() {
 
 //cząsteczki przy kontakcie haczyka z powierzchnią wody
 var waterParticle = function(y) {
-    this.position = new PVector(random(156, 160), y);   //przekazuje argument y z pętli rysującej fale na wodzie w funkcji draw
-    this.size = random(1, 4);
-    this.velocity = new PVector(random(-0.3, 0.3), random(-2, -0.5));   //cząsteczki są "wyrzucane" do góry
+    this.position = new PVector(processingInstance.random(156, 160), y);   //przekazuje argument y z pętli rysującej fale na wodzie w funkcji draw
+    this.size = processingInstance.random(1, 4);
+    this.velocity = new PVector(processingInstance.random(-0.3, 0.3), processingInstance.random(-2, -0.5));   //cząsteczki są "wyrzucane" do góry
     this.acceleration = new PVector(0, 0.04);   //przyspieszenie ściąga cząsteczki w dół
 };
 
@@ -236,18 +236,18 @@ waterParticle.prototype.update = function() {
 
 //konstruktor ryby
 var Fish = function() {
-    this.position = new PVector(random(40, 350), random(170, 380));
+    this.position = new PVector(processingInstance.random(40, 350), processingInstance.random(170, 380));
     this.velocity = new PVector(0, 0);
-    this.size = random(0.5, 2); //ryby są różnej wielkości
+    this.size = processingInstance.random(0.5, 2); //ryby są różnej wielkości
     this.acceleration = new PVector(0.02 * this.size, 0.01 * this.size); // przyspieszenie zależne od wielkości ryby
 
     this.swimmingStates = ['slowSwim', 'mediumSwim', 'fastSwim']; //tablica z różnymi stanami prędkości ryb
     this.randomSwim = 'fastSwim'; //początkowy stan prędkości ryby
 
     this.eyeX = 17;
-    this.bodyColor = color(random(100, 255), random(50, 150), random(50, 150)); //ryba posiada losowe ubarwienie
-    this.finColor = color(random(50, 150), random(150, 255), random(100, 255));
-    this.direction = new PVector(random(1) < 0.5 ? -1 : 1, random(1) < 0.5 ? -1 : 1); //warunek wybiera początkowy kierunek ruchu ryby: 1 - prawo/góra lub -1 - lewo/dół
+    this.bodyColor = color(processingInstance.random(100, 255), processingInstance.random(50, 150), processingInstance.random(50, 150)); //ryba posiada losowe ubarwienie
+    this.finColor = color(processingInstance.random(50, 150), processingInstance.random(150, 255), processingInstance.random(100, 255));
+    this.direction = new PVector(processingInstance.random(1) < 0.5 ? -1 : 1, processingInstance.random(1) < 0.5 ? -1 : 1); //warunek wybiera początkowy kierunek ruchu ryby: 1 - prawo/góra lub -1 - lewo/dół
 
     this.fishHooked = false;    //flaga używana do sprawdzenia czy ryba jest zahaczona
     this.fishOnTop = false;     //flaga używana do sprawdzenia czy ryba jest na górze (czy jest złapana)
@@ -289,16 +289,16 @@ Fish.prototype.swim = function() {
         return;
     }
 
-    if (random(10) <= 0.01) {
-        this.randomSwim = this.swimmingStates[floor(random(3))]; //wybiera losowy stan (prędkość ruchu ryby) z tablicy swimmingStates
+    if (processingInstance.random(10) <= 0.01) {
+        this.randomSwim = this.swimmingStates[floor(processingInstance.random(3))]; //wybiera losowy stan (prędkość ruchu ryby) z tablicy swimmingStates
     }
 
     //mała szansa na losową zmianę kierunku poruszania się ryby
-    if (random(10) <= 0.03) {
+    if (processingInstance.random(10) <= 0.03) {
         this.direction.y *= -1;
     }
 
-    if (random(10) <= 0.02) {
+    if (processingInstance.random(10) <= 0.02) {
         this.direction.x *= -1;
     }
 
@@ -378,7 +378,7 @@ Fish.prototype.swimBack = function() {
     }
 
     if (!this.targetX) {
-        this.targetX = random(60, 350); //miejsce do którego mają wrócić ryby
+        this.targetX = processingInstance.random(60, 350); //miejsce do którego mają wrócić ryby
     }
 
     this.direction.set(-1, 0);
@@ -388,9 +388,9 @@ Fish.prototype.swimBack = function() {
     //po dotarciu do miejsca docelowego ryby znów zaczynają pływać wg metody swim
     if(this.position.x < this.targetX){
         this.fishAway = false;
-        this.direction.set(random(1) < 0.5 ? -1 : 1, random(1) < 0.5 ? -1 : 1);
+        this.direction.set(processingInstance.random(1) < 0.5 ? -1 : 1, processingInstance.random(1) < 0.5 ? -1 : 1);
         this.velocity = new PVector(0, 0);
-        this.randomSwim = this.swimmingStates[floor(random(3))];
+        this.randomSwim = this.swimmingStates[floor(processingInstance.random(3))];
         this.targetX = null;
     }
 };
@@ -480,8 +480,8 @@ Fish.prototype.miniGame = function(rod, index) {
         hookedFishIndex = -1;
         greenRect = 150;
         miniGameParticles = []; //zerowanie ilości cząsteczek
-        this.position = new PVector(random(20, 70), random(110, 120)); //złapana ryba zostaje przeniesiona na pomost
-        this.direction = new PVector(random(1) < 0.5 ? -1 : 1, -1);
+        this.position = new PVector(processingInstance.random(20, 70), processingInstance.random(110, 120)); //złapana ryba zostaje przeniesiona na pomost
+        this.direction = new PVector(processingInstance.random(1) < 0.5 ? -1 : 1, -1);
         this.velocity = new PVector(0, 0);
         this.acceleration = new PVector(0, 0);
 
@@ -507,10 +507,10 @@ Fish.prototype.miniGame = function(rod, index) {
 var NightFish = function() {
     Fish.call(this);
 
-    this.position = new PVector(random(460, 480), random(170, 380)); // ryby nocne na początku gry są poza płótnem
+    this.position = new PVector(processingInstance.random(460, 480), processingInstance.random(170, 380)); // ryby nocne na początku gry są poza płótnem
 
-    this.bodyColor = color(random(20, 100), random(10, 80), random(10, 80)); //ryby nocne mają ciemniejsze kolory
-    this.finColor = color(random(10, 80), random(80, 200), random(50, 200));
+    this.bodyColor = color(processingInstance.random(20, 100), processingInstance.random(10, 80), processingInstance.random(10, 80)); //ryby nocne mają ciemniejsze kolory
+    this.finColor = color(processingInstance.random(10, 80), processingInstance.random(80, 200), processingInstance.random(50, 200));
 
     this.nightFishAway = false; //flaga używana do sprawdzenia czy na płótnie jest odpowiedni rodzaj ryby
 };
@@ -543,7 +543,7 @@ NightFish.prototype.swimBack = function() {
     }
 
     if (!this.targetX) {
-        this.targetX = random(60, 350); //miejsce do którego mają wrócić ryby
+        this.targetX = processingInstance.random(60, 350); //miejsce do którego mają wrócić ryby
     }
 
     this.direction.set(-1, 0);
@@ -552,9 +552,9 @@ NightFish.prototype.swimBack = function() {
 
     if (this.position.x < this.targetX) {
         this.nightFishAway = false;
-        this.direction.set(random(1) < 0.5 ? -1 : 1, random(1) < 0.5 ? -1 : 1);
+        this.direction.set(processingInstance.random(1) < 0.5 ? -1 : 1, processingInstance.random(1) < 0.5 ? -1 : 1);
         this.velocity = new PVector(0, 0);
-        this.randomSwim = this.swimmingStates[floor(random(3))];
+        this.randomSwim = this.swimmingStates[floor(processingInstance.random(3))];
         this.targetX = null;
     }
 };
@@ -627,8 +627,8 @@ NightFish.prototype.miniGame = function(rod, index) {
         hookedNightFishIndex = -1;
         greenRect = 150;
         miniGameParticles = []; //zerowanie ilości cząsteczek
-        this.position = new PVector(random(20, 70), random(110, 120)); //złapana ryba zostaje przeniesiona na pomost
-        this.direction = new PVector(random(1) < 0.5 ? -1 : 1, -1);
+        this.position = new PVector(processingInstance.random(20, 70), processingInstance.random(110, 120)); //złapana ryba zostaje przeniesiona na pomost
+        this.direction = new PVector(processingInstance.random(1) < 0.5 ? -1 : 1, -1);
         this.velocity = new PVector(0, 0);
         this.acceleration = new PVector(0, 0);
     }
@@ -651,10 +651,10 @@ NightFish.prototype.miniGame = function(rod, index) {
 
 //konstruktor drzewa
 var Tree = function() {
-    this.x = random(0, 385);
-    this.y = random(80, 115);
-    this.treeHeight = random(2, 50);
-    this.treeWidth = random(4, 7);
+    this.x = processingInstance.random(0, 385);
+    this.y = processingInstance.random(80, 115);
+    this.treeHeight = processingInstance.random(2, 50);
+    this.treeWidth = processingInstance.random(4, 7);
     this.woodColor = color(74, 40, 0);
     this.woodNightColor = color(33, 18, 0);
     this.leafColor = color(30, 128, 0);
@@ -664,7 +664,7 @@ var Tree = function() {
 
     //dodanie współrzędnych 30 liści do tablicy
     for (var i = 0; i < 30; i++) {
-        this.leafs.push({x: this.x + random(-10, 10), y: this.y - this.treeHeight / 2 + random(-10, 10), angle: random(-30, 30)});
+        this.leafs.push({x: this.x + processingInstance.random(-10, 10), y: this.y - this.treeHeight / 2 + processingInstance.random(-10, 10), angle: processingInstance.random(-30, 30)});
     }
 };
 
@@ -704,7 +704,7 @@ Tree.prototype.drawLeaf = function() {
 //tablice przechowujące atrybuty dla gwiazd, drzew, bąbelków, wodorostów, kamieni, ryb oraz cząsteczek
 var stars = [];
 for (var i = 0; i < 40; i++) {
-    stars.push({x: random(400), y: random(80), size: 2});
+    stars.push({x: processingInstance.random(400), y: processingInstance.random(80), size: 2});
 }
 
 var trees = [];
@@ -719,12 +719,12 @@ for (var i = 0; i < 20; i++) {
 
 var seaweed = [];
 for (var i = 0; i < 15; i++) {
-    seaweed.push({x: 200, y: random(-200, 200), height: random(20, 300), width: random(2, 5)});
+    seaweed.push({x: 200, y: processingInstance.random(-200, 200), height: processingInstance.random(20, 300), width: processingInstance.random(2, 5)});
 }
 
 var rocks = [];
 for (var i = 0; i < 4; i++) {
-    rocks.push({x: random(10, 350), y: 385, width:random(20, 70), height: random(15, 100)});
+    rocks.push({x: processingInstance.random(10, 350), y: 385, width:processingInstance.random(20, 70), height: processingInstance.random(15, 100)});
 }
 
 var fish = [];
@@ -1023,7 +1023,7 @@ reset = function() {
 
 //główna funkcja rysująca
 draw = function() {
-    if(random(2000) < 1){
+    if(processingInstance.random(2000) < 1){
         Bubbles.volume = 0.4;
         Bubbles.play(); //efekt dźwiękowy bąbelków co jakiś czas
     }
@@ -1191,8 +1191,8 @@ draw = function() {
         rect(rocks[i].x, rocks[i].y, rocks[i].width, rocks[i].height, 50);
         for (var j = 0; j < rocks.length; j++) { //pętla pomocnicza do sprawdzenia warunku
             if(i !== j && rocks[i].x < rocks[j].x + rocks[j].width && rocks[i].x + rocks[i].width > rocks[j].x){    //warunek sprawdzający czy kamienie się na siebie nie nakładają
-                rocks[i].x = random(10, 350);
-                rocks[j].x = random(10, 350);
+                rocks[i].x = processingInstance.random(10, 350);
+                rocks[j].x = processingInstance.random(10, 350);
             }
         }
     }
@@ -1209,8 +1209,8 @@ draw = function() {
     rotate(radians(90));
     for (var i = 0; i < seaweed.length; i++) {
         rect(seaweed[i].x, seaweed[i].y, seaweed[i].height, seaweed[i].width);
-        if (frameCount % 30 === 0 && random(0, 1) < 0.5) {  //wodorosty delikatnie się poruszają
-        seaweed[i].height += random(-10, 10);
+        if (frameCount % 30 === 0 && processingInstance.random(0, 1) < 0.5) {  //wodorosty delikatnie się poruszają
+        seaweed[i].height += processingInstance.random(-10, 10);
         }
     }
     popMatrix();
