@@ -1283,12 +1283,3 @@ draw = function() {
 
 };
 
-// Pobranie elementu <canvas> z HTML, który będzie używany przez ProcessingJS
-var canvas = document.getElementById("mycanvas"); 
-// Utworzenie instancji ProcessingJS, która łączy kod Processing z elementem <canvas>
-if (canvas) {
-  window.fishGameProcessingInstance = new Processing(canvas, programCode); //super zmienna globalna miedzyplanetarna intergalaktyczna, aby można było zatrzymać grę z poziomu HTML
-  console.log("ProcessingJS instance created:", window.fishGameProcessingInstance);
-} else {
-  console.warn("Nie znaleziono <canvas id='mycanvas'>! Instancja gry nie została utworzona.");
-}

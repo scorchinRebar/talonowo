@@ -124,6 +124,25 @@ function openSite(nav) {
                     let script2 = document.createElement('script');
                     script2.src = 'fishGame.js';
                     script2.classList.add('dynamic-script');
+
+                    script2.onload = function() {
+                    console.log('fishGame.js loaded');
+                    setTimeout(() => {
+                      if (window.fishGameProcessingInstance) {
+                        console.log('Processing instance already running');
+                      } else {
+                        console.log('Creating Processing instance...');
+                        const canvas = document.getElementById('mycanvas');
+                        if (canvas) {
+                          window.fishGameProcessingInstance = new Processing(canvas, programCode);
+                          console.log("ProcessingJS instance created:", window.fishGameProcessingInstance);
+                        } else {
+                         console.warn("Nie znaleziono <canvas id='mycanvas'>! Instancja gry nie została utworzona.");
+                        }
+                      }
+                    }, 500);
+                  };
+
                     document.body.appendChild(script2);
                   };
 
