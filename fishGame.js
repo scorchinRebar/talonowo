@@ -775,24 +775,24 @@ var waveAmplitude = 5;
 var angle;
 
 //kolory
-var skyColor = p.noStroke(100, 212, 253);
-var nightSkyColor = p.noStroke(19, 24, 98);
-var landscapeColor = p.noStroke(0, 173, 0);
-var landscapeNightColor = p.noStroke(0, 77, 0);
-var cloudColor = p.noStroke(255, 255, 255, 200);
-var cloudNightColor = p.noStroke(35, 36, 59, 200);
-var waterColor = p.noStroke(0, 255, 255);
-var waterNightColor = p.noStroke(29, 52, 135);
-var bridgeColor = p.noStroke(58, 32, 15);
-var bridgeNightColor = p.noStroke(31, 16, 6);
-var starsColor = p.noStroke(100, 212, 253);
-var starsNightColor = p.noStroke(255, 255, 255);
-var sandColor = p.noStroke(255, 236, 189);
-var sandNightColor = p.noStroke(69, 51, 25);
-var seaweedColor = p.noStroke(0, 110, 0);
-var seaweedNightColor = p.noStroke(0, 64, 0);
-var rockColor = p.noStroke(73, 73, 72);
-var rockNightColor = p.noStroke(33, 33, 33);
+var skyColor = p.color(100, 212, 253);
+var nightSkyColor = p.color(19, 24, 98);
+var landscapeColor = p.color(0, 173, 0);
+var landscapeNightColor = p.color(0, 77, 0);
+var cloudColor = p.color(255, 255, 255, 200);
+var cloudNightColor = p.color(35, 36, 59, 200);
+var waterColor = p.color(0, 255, 255);
+var waterNightColor = p.color(29, 52, 135);
+var bridgeColor = p.color(58, 32, 15);
+var bridgeNightColor = p.color(31, 16, 6);
+var starsColor = p.color(100, 212, 253);
+var starsNightColor = p.color(255, 255, 255);
+var sandColor = p.color(255, 236, 189);
+var sandNightColor = p.color(69, 51, 25);
+var seaweedColor = p.color(0, 110, 0);
+var seaweedNightColor = p.color(0, 64, 0);
+var rockColor = p.color(73, 73, 72);
+var rockNightColor = p.color(33, 33, 33);
 
 //zmienne używane do określenia prędkości płynnych przejść między kolorami
 var t = 0;
