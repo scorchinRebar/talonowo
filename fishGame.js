@@ -1308,6 +1308,8 @@ draw = function() {
 
 };
 
+const canvas = document.getElementById('mycanvas');
+
 if (canvas) {
     const wrapped = createProcessingWrapper(Processing);
     window.fishGameProcessingInstance = new Processing(canvas, wrapped(programCode));
