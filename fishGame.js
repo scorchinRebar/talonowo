@@ -1,4 +1,4 @@
- console.log('Processing global?', typeof Processing);
+console.log('Processing global?', typeof Processing);
  //WŁASNOŚĆ PATRYKA P. AKA majomajo112 ALL RIGHTS RESERVED
  // Funkcja programCode zawiera kod programu napisanego w języku Processing
 var programCode = function(processingInstance) {
