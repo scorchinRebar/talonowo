@@ -1309,7 +1309,8 @@ draw = function() {
 };
 
 if (canvas) {
-    window.fishGameProcessingInstance = new Processing(canvas, programCode);
+    const wrapped = createProcessingWrapper(Processing);
+    window.fishGameProcessingInstance = new Processing(canvas, wrapped(programCode));
     console.log("ProcessingJS instance created:", window.fishGameProcessingInstance);
 } else {
     console.log("Nie znaleziono <canvas id='mycanvas'>! Instancja gry nie została utworzona.");
