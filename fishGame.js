@@ -671,14 +671,14 @@ var Tree = function() {
 //funkcja rysująca drzewo
 Tree.prototype.draw = function() {
     
-    p.rectMode(CENTER);
+    p.rectMode(p.CENTER);
     if (isDay) {
         p.fill(p.lerpColor(this.woodColor, this.woodNightColor, t));
     } else {
         p.fill(p.lerpColor(this.woodNightColor, this.woodColor, t2));
     }
     p.rect(this.x, this.y, this.treeWidth, this.treeHeight);
-    p.rectMode(CORNER);
+    p.rectMode(p.CORNER);
 
     this.drawLeaf();    //wywołanie funkcji rysującą liście dla każego drzewa
 };
@@ -828,7 +828,7 @@ day = function(){
     p.beginShape();   //krajobraz
     p.vertex(0, 265); p.vertex(0, 131); p.vertex(36, 134); p.vertex(77, 143); p.vertex(132, 157); p.vertex(179, 138); p.vertex(218, 125);
      p.vertex(271, 131); p.vertex(320, 131); p.vertex(348, 145); p.vertex(400, 148); p.vertex(400, 242);
-    p.endShape(CLOSE);
+    p.endShape(p.CLOSE);
     p.popMatrix();
 
     p.fill(255, 255, 0);
@@ -857,7 +857,7 @@ day = function(){
      p.vertex(58,56); p.vertex(63,47); p.vertex(69,43); p.vertex(77,42); p.vertex(84,45); p.vertex(92,48); p.vertex(94,50); p.vertex(97,45); p.vertex(104,41); p.vertex(114,40); p.vertex(124,45); p.vertex(130,51); p.vertex(135,51); 
      p.vertex(149,47); p.vertex(160,48); p.vertex(167,55); p.vertex(163,66); p.vertex(149,76); p.vertex(136,76); p.vertex(130,74); p.vertex(129,78); p.vertex(122,82); p.vertex(114,84); p.vertex(105,78); p.vertex(101,73); p.vertex(99,75); 
      p.vertex(92,82); p.vertex(84,83); p.vertex(73,78); p.vertex(70,74); p.vertex(66,70); p.vertex(61,68); p.vertex(47,74); p.vertex(39,73); p.vertex(34,61); p.vertex(36,52); p.vertex(49,49); p.vertex(59,48); p.vertex(61,48); p.vertex(64,50);
-    p.endShape(CLOSE);
+    p.endShape(p.CLOSE);
     p.popMatrix();
 
     p.pushMatrix();
@@ -865,7 +865,7 @@ day = function(){
     p.beginShape();   //chmura 2
      p.vertex(123,13); p.vertex(133,9); p.vertex(148,6); p.vertex(161,8); p.vertex(171,15); p.vertex(173,19); p.vertex(166,27); p.vertex(150,32); 
      p.vertex(133,34); p.vertex(109,30); p.vertex(93,24); p.vertex(89,18); p.vertex(96,6); p.vertex(115,4); p.vertex(129,4); p.vertex(143,7); p.vertex(150,10);
-    p.endShape(CLOSE);
+    p.endShape(p.CLOSE);
     p.popMatrix();
 
     for (var i = 0; i < trees.length; i++) {
@@ -932,13 +932,13 @@ night = function(){
      p.vertex(58,56); p.vertex(63,47); p.vertex(69,43); p.vertex(77,42); p.vertex(84,45); p.vertex(92,48); p.vertex(94,50); p.vertex(97,45); p.vertex(104,41); p.vertex(114,40); p.vertex(124,45); p.vertex(130,51); p.vertex(135,51); 
      p.vertex(149,47); p.vertex(160,48); p.vertex(167,55); p.vertex(163,66); p.vertex(149,76); p.vertex(136,76); p.vertex(130,74); p.vertex(129,78); p.vertex(122,82); p.vertex(114,84); p.vertex(105,78); p.vertex(101,73); p.vertex(99,75); 
      p.vertex(92,82); p.vertex(84,83); p.vertex(73,78); p.vertex(70,74); p.vertex(66,70); p.vertex(61,68); p.vertex(47,74); p.vertex(39,73); p.vertex(34,61); p.vertex(36,52); p.vertex(49,49); p.vertex(59,48); p.vertex(61,48); p.vertex(64,50);
-    p.endShape(CLOSE);
+    p.endShape(p.CLOSE);
 
     p.translate(cloudX2, cloudY2);
     p.beginShape();   //chmura 2
      p.vertex(123,13); p.vertex(133,9); p.vertex(148,6); p.vertex(161,8); p.vertex(171,15); p.vertex(173,19); p.vertex(166,27); p.vertex(150,32); 
      p.vertex(133,34); p.vertex(109,30); p.vertex(93,24); p.vertex(89,18); p.vertex(96,6); p.vertex(115,4); p.vertex(129,4); p.vertex(143,7); p.vertex(150,10);
-    p.endShape(CLOSE);
+    p.endShape(p.CLOSE);
     p.popMatrix();
     
     p.pushMatrix();
@@ -947,7 +947,7 @@ night = function(){
     p.beginShape();   //krajobraz
      p.vertex(0, 296);p.vertex(0, 279);p.vertex(0, 265);p.vertex(0, 131);p.vertex(36, 134);p.vertex(77, 143);p.vertex(132, 157);p.vertex(179, 138);
      p.vertex(218, 125);p.vertex(271, 131);p.vertex(320, 131);p.vertex(348, 153);p.vertex(400, 166);p.vertex(400, 242);
-    p.endShape(CLOSE);
+    p.endShape(p.CLOSE);
     p.popMatrix();
 
     for (var i = 0; i < trees.length; i++) {
@@ -1124,7 +1124,7 @@ p.draw = function() {
     p.beginShape();   //piasek na dnie wody
      p.vertex(0,400); p.vertex(0,383); p.vertex(1,383); p.vertex(11,381); p.vertex(23,376); p.vertex(39,372); p.vertex(64,370); p.vertex(91,376); p.vertex(108,380); p.vertex(130,380); p.vertex(150,382); p.vertex(166,381); p.vertex(193,378);
      p.vertex(217,374); p.vertex(229,376); p.vertex(252,379); p.vertex(279,386); p.vertex(310,393); p.vertex(324,393); p.vertex(341,394); p.vertex(365,392); p.vertex(381,388); p.vertex(390,383); p.vertex(400,386); p.vertex(400,400);
-    p.endShape(CLOSE);
+    p.endShape(p.CLOSE);
 
    
     waveAngle += 0.025
@@ -1198,7 +1198,7 @@ p.draw = function() {
     }
     
     //wodorosty
-    p.rectMode(CENTER);
+    p.rectMode(p.CENTER);
     p.pushMatrix();
     if (isDay) {
         p.fill(p.lerpColor(seaweedColor, seaweedNightColor, t));
@@ -1214,7 +1214,7 @@ p.draw = function() {
         }
     }
     p.popMatrix();
-    p.rectMode(CORNER);
+    p.rectMode(p.CORNER);
     
     //wywołanie funkcji rysującej wędkę
     rod.draw();
