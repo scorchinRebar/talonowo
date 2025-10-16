@@ -1022,7 +1022,7 @@ reset = function() {
 };
 
 //główna funkcja rysująca
-draw = function() {
+p.draw = function() {
     if(p.random(2000) < 1){
         Bubbles.volume = 0.4;
         Bubbles.play(); //efekt dźwiękowy bąbelków co jakiś czas
