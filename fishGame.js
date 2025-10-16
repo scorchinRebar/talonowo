@@ -1,4 +1,28 @@
  console.log('Processing global?', typeof Processing);
+
+ function createProcessingWrapper(p) {
+  const context = {};
+
+  // wszystkie właściwości Processing dodaj do lokalnego kontekstu
+  for (let key in p) {
+    if (typeof p[key] === "function") {
+      context[key] = p[key].bind(p);
+    } else {
+      Object.defineProperty(context, key, {
+        get: () => p[key],
+        set: (val) => { p[key] = val; },
+      });
+    }
+  }
+
+  return function(userCode) {
+    // wykonaj kod w tym kontekście
+    return function() {
+      return userCode.call(context, context);
+    };
+  };
+}
+
  //WŁASNOŚĆ PATRYKA P. AKA majomajo112 ALL RIGHTS RESERVED
  // Funkcja programCode zawiera kod programu napisanego w języku Processing
 var programCode = function(processingInstance) {
@@ -1283,4 +1307,11 @@ draw = function() {
 
 
 };
+
+if (canvas) {
+    window.fishGameProcessingInstance = new Processing(canvas, programCode);
+    console.log("ProcessingJS instance created:", window.fishGameProcessingInstance);
+} else {
+    console.log("Nie znaleziono <canvas id='mycanvas'>! Instancja gry nie została utworzona.");
+}
 
