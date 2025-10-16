@@ -703,7 +703,7 @@ Tree.prototype.drawLeaf = function() {
 //tablice przechowujące atrybuty dla gwiazd, drzew, bąbelków, wodorostów, kamieni, ryb oraz cząsteczek
 var stars = [];
 for (var i = 0; i < 40; i++) {
-    stars.push({x: random(width), y: random(80), size: 2});
+    stars.push({x: random(400), y: random(80), size: 2});
 }
 
 var trees = [];

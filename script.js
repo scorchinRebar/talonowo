@@ -118,6 +118,7 @@ function openSite(nav) {
                   let script1 = document.createElement('script');
                   script1.src = 'data/processing.min.js';
                   script1.classList.add('dynamic-script');
+                  document.body.appendChild(script1);
 
                   script1.onload = function() {
                     let script2 = document.createElement('script');
@@ -126,7 +127,6 @@ function openSite(nav) {
                     document.body.appendChild(script2);
                   };
 
-                  document.body.appendChild(script1);
                 });
               }
             }, 1000);
