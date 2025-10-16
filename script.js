@@ -121,6 +121,7 @@ function openSite(nav) {
                   document.body.appendChild(script1);
 
                   script1.onload = function() {
+                    console.log('processing.min.js loaded');
                     let script2 = document.createElement('script');
                     script2.src = 'fishGame.js';
                     script2.classList.add('dynamic-script');

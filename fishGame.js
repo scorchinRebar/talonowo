@@ -1,3 +1,4 @@
+ console.log('Processing global?', typeof Processing);
  //WŁASNOŚĆ PATRYKA P. AKA majomajo112 ALL RIGHTS RESERVED
  // Funkcja programCode zawiera kod programu napisanego w języku Processing
 var programCode = function(processingInstance) {
@@ -6,7 +7,7 @@ var programCode = function(processingInstance) {
     // Ustawienie liczby klatek na sekundę (60 FPS)
     processingInstance.frameRate(60);
     // W tym miejscu możesz wkleić kod napisany w języku Processing z Khan Academy:
-
+console.log("FishGame loaded — Processing in window?", typeof Processing);
     /* Lista zmian/dodatków względem pierwszej wersji gry:
         - pobranie biblioteki processingJS w celu obsługi gry offline ✔
         - obniżenie poziomu wody i ludzika w celu większego miejsca na krajobraz i niebo ✔
