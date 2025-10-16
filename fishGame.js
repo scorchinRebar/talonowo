@@ -671,14 +671,14 @@ var Tree = function() {
 //funkcja rysująca drzewo
 Tree.prototype.draw = function() {
     
-    rectMode(CENTER);
+    p.rectMode(CENTER);
     if (isDay) {
         p.fill(p.lerpColor(this.woodColor, this.woodNightColor, t));
     } else {
         p.fill(p.lerpColor(this.woodNightColor, this.woodColor, t2));
     }
     p.rect(this.x, this.y, this.treeWidth, this.treeHeight);
-    rectMode(CORNER);
+    p.rectMode(CORNER);
 
     this.drawLeaf();    //wywołanie funkcji rysującą liście dla każego drzewa
 };
@@ -1198,7 +1198,7 @@ p.draw = function() {
     }
     
     //wodorosty
-    rectMode(CENTER);
+    p.rectMode(CENTER);
     p.pushMatrix();
     if (isDay) {
         p.fill(p.lerpColor(seaweedColor, seaweedNightColor, t));
@@ -1214,7 +1214,7 @@ p.draw = function() {
         }
     }
     p.popMatrix();
-    rectMode(CORNER);
+    p.rectMode(CORNER);
     
     //wywołanie funkcji rysującej wędkę
     rod.draw();
