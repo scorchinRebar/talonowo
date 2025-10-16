@@ -1,46 +1,22 @@
  console.log('Processing global?', typeof Processing);
-
- function createProcessingWrapper(p) {
-  const context = {};
-
-  // wszystkie właściwości Processing dodaj do lokalnego kontekstu
-  for (let key in p) {
-    if (typeof p[key] === "function") {
-      context[key] = p[key].bind(p);
-    } else {
-      Object.defineProperty(context, key, {
-        get: () => p[key],
-        set: (val) => { p[key] = val; },
-      });
-    }
-  }
-
-  return function(userCode) {
-    // wykonaj kod w tym kontekście
-    return function() {
-      return userCode.call(context, context);
-    };
-  };
-}
-
  //WŁASNOŚĆ PATRYKA P. AKA majomajo112 ALL RIGHTS RESERVED
  // Funkcja programCode zawiera kod programu napisanego w języku Processing
-var programCode = function(processingInstance) {
+var programCode = function(p) {
     // Ustawienie rozmiaru płótna na 400x400 pikseli
-    processingInstance.size(400, 400);
+    p.size(400, 400);
     // Ustawienie liczby klatek na sekundę (60 FPS)
-    processingInstance.frameRate(60);
+    p.frameRate(60);
     // W tym miejscu możesz wkleić kod napisany w języku Processing z Khan Academy:
 console.log("FishGame loaded — Processing in window?", typeof Processing);
     /* Lista zmian/dodatków względem pierwszej wersji gry:
         - pobranie biblioteki processingJS w celu obsługi gry offline ✔
         - obniżenie poziomu wody i ludzika w celu większego miejsca na krajobraz i niebo ✔
-        - krajobraz (beginShape i vertex) z drzewami/krzakami i chmurami ✔
+        - krajobraz (p.beginShape i p.vertex) z drzewami/krzakami i chmurami ✔
         - przegrana minigierki gdy zielony pasek spadnie do zera ✔
         - Cykl dnia i nocy ✔
         - płynne przejście między dniem i nocą ✔
-        - ruch żyłki z przyspieszeniem za pomocą PVector ✔
-        - bardziej "losowe" i dynamiczne poruszanie się ryb za pomocą PVector ✔
+        - ruch żyłki z przyspieszeniem za pomocą p.PVector ✔
+        - bardziej "losowe" i dynamiczne poruszanie się ryb za pomocą p.PVector ✔
         - obracanie się ryb w stronę w którą płyną ✔
         - fale na wodzie, za pomocą fal i prędkości kątowej ✔
         - nocne ryby ✔
@@ -63,18 +39,18 @@ window.reeling.volume = 0.2;
 
 //konstruktor wędki
 var Rod = function() {
-    this.RodPos = new PVector(-60, 140);    //własności wędziska    (new PVector(x, y) - jedna zmienna przechowuje dwie współrzędne (punkt))
-    this.RodLengthWidth = new PVector(60, 5);
+    this.RodPos = new p.PVector(-60, 140);    //własności wędziska    (new p.PVector(x, y) - jedna zmienna przechowuje dwie współrzędne (punkt))
+    this.RodLengthWidth = new p.PVector(60, 5);
 
-    this.LinePos = new PVector(105, -45);   //własności żyłki
-    this.LineLengthWidth = new PVector(40, 1);
-    this.LineSpeed = new PVector(0, 0);
+    this.LinePos = new p.PVector(105, -45);   //własności żyłki
+    this.LineLengthWidth = new p.PVector(40, 1);
+    this.LineSpeed = new p.PVector(0, 0);
 
-    this.hookPos = new PVector(161, 100);   //własności haczyka
-    this.hookSpeed = new PVector(0, 0);
+    this.hookPos = new p.PVector(161, 100);   //własności haczyka
+    this.hookSpeed = new p.PVector(0, 0);
 
-    this.lineAcceleration = new PVector(0.04, 0);   //przyspieszenie żyłki i haczyka
-    this.hookAcceleration = new PVector(0, 0.04);
+    this.lineAcceleration = new p.PVector(0.04, 0);   //przyspieszenie żyłki i haczyka
+    this.hookAcceleration = new p.PVector(0, 0.04);
 
     this.fishCaught = 0;    //ilość złapanych ryb
 
@@ -85,38 +61,38 @@ var Rod = function() {
 Rod.prototype.draw = function() {
 
 //wędzisko i żyłka
-    pushMatrix();
-        fill(37, 2, 70);
-        translate(200, 200);
-        rotate(radians(140));
-        rect(this.RodPos.x, this.RodPos.y, this.RodLengthWidth.x, this.RodLengthWidth.y);  //wędzisko
-        fill(255, 255, 255);
-        rotate(radians(130));
-        rect(this.LinePos.x, this.LinePos.y, this.LineLengthWidth.x, this.LineLengthWidth.y);  //żyłka
-    popMatrix();
+    p.pushMatrix();
+        p.fill(37, 2, 70);
+        p.translate(200, 200);
+        p.rotate(p.radians(140));
+        p.rect(this.RodPos.x, this.RodPos.y, this.RodLengthWidth.x, this.RodLengthWidth.y);  //wędzisko
+        p.fill(255, 255, 255);
+        p.rotate(p.radians(130));
+        p.rect(this.LinePos.x, this.LinePos.y, this.LineLengthWidth.x, this.LineLengthWidth.y);  //żyłka
+    p.popMatrix();
 
 //haczyk
-    pushMatrix();
-        rotate(radians(90));
-        fill(49, 49, 49);
-        rect(this.LineLengthWidth.x + 54, -158, 8, 2);
+    p.pushMatrix();
+        p.rotate(p.radians(90));
+        p.fill(49, 49, 49);
+        p.rect(this.LineLengthWidth.x + 54, -158, 8, 2);
 
-        rotate(radians(90));
-        fill(49, 49, 49);
-        rect(-162, -63 - this.LineLengthWidth.x, 5, 2);
+        p.rotate(p.radians(90));
+        p.fill(49, 49, 49);
+        p.rect(-162, -63 - this.LineLengthWidth.x, 5, 2);
 
-        rotate(radians(90));
-        fill(49, 49, 49);
-        rect(-62 - this.LineLengthWidth.x, 160, 5, 2);
-    popMatrix();
+        p.rotate(p.radians(90));
+        p.fill(49, 49, 49);
+        p.rect(-62 - this.LineLengthWidth.x, 160, 5, 2);
+    p.popMatrix();
 
-    fill(255, 255, 255);
-    ellipse(this.hookPos.x, this.hookPos.y, 3, 3);  //biały punkt na haczyku, ułatwiający sprawdzenie warunku z Fish.prototype.isHooked
+    p.fill(255, 255, 255);
+    p.ellipse(this.hookPos.x, this.hookPos.y, 3, 3);  //biały punkt na haczyku, ułatwiający sprawdzenie warunku z Fish.prototype.isHooked
 
 //ograniczenia dot. wielkości zmiennych odpowiedzialnych za ruch żyłki i haczyka
-    this.LinePos.x = constrain(this.LinePos.x, -190, 105);
-    this.LineLengthWidth.x = constrain(this.LineLengthWidth.x, 40, 335);
-    this.hookPos.y = constrain(this.hookPos.y, 100, 395);
+    this.LinePos.x = p.constrain(this.LinePos.x, -190, 105);
+    this.LineLengthWidth.x = p.constrain(this.LineLengthWidth.x, 40, 335);
+    this.hookPos.y = p.constrain(this.hookPos.y, 100, 395);
 };
 
 //funkcja "opuszczająca" żyłkę i haczyk
@@ -169,39 +145,39 @@ Rod.prototype.lineUp = function() {
 Rod.prototype.ifCollision = function(y) {
     //pozycja y haczyka i wody są zaokrąglone w celu umożliwienia wykrycia kolizji
     //kolizja zachodzi max. raz na sekundę
-    if (round(this.hookPos.y) === round(y) && millis() - this.lastCollision > 1000) {
+    if (p.round(this.hookPos.y) === p.round(y) && p.millis() - this.lastCollision > 1000) {
         //console.log('collision');
         for (var i = 0; i < 15; i++) {
             waterParticles.push(new waterParticle(this.hookPos.y)); //dodanie do tablicy 15 cząsteczek wody
         }
-        this.lastCollision = millis(); //reset czasu od ostatniej kolizji
+        this.lastCollision = p.millis(); //reset czasu od ostatniej kolizji
     }
 };
 
 
 //konstruktor cząstek przy minigierce
 var miniGameParticle = function() {
-    this.position = new PVector(greenRect + 40, processingInstance.random(300, 350));
-    this.size = processingInstance.random(6, 12);
-    this.velocity = new PVector(processingInstance.random(-1, 0), processingInstance.random(-1, 0));    //prędkość - cząsteczki początkowo "wyrzuca" w lewo i lekko w górę
-    this.acceleration = new PVector(0, 0.03);   //przyspieszenie ściąga cząsteczki w dół
+    this.position = new p.PVector(greenRect + 40, p.random(300, 350));
+    this.size = p.random(6, 12);
+    this.velocity = new p.PVector(p.random(-1, 0), p.random(-1, 0));    //prędkość - cząsteczki początkowo "wyrzuca" w lewo i lekko w górę
+    this.acceleration = new p.PVector(0, 0.03);   //przyspieszenie ściąga cząsteczki w dół
 
     this.alpha = 255; //przezroczystość cząsteczek
 
     //różne odcienie zieleni
-    if (processingInstance.random(1) > 0.66) {
-        this.color = color(0, 180, 0);       
-    } else if (processingInstance.random(1) > 0.33) {
-        this.color = color(0, 200, 0);
+    if (p.random(1) > 0.66) {
+        this.color = p.color(0, 180, 0);       
+    } else if (p.random(1) > 0.33) {
+        this.color = p.color(0, 200, 0);
     } else {
-        this.color = color(0, 220, 0);
+        this.color = p.color(0, 220, 0);
     }
 }
 
 //funkcja rysująca cząsteczki
 miniGameParticle.prototype.draw = function() {
-    fill(this.color, this.alpha);
-    ellipse(this.position.x, this.position.y, this.size, this.size);
+    p.fill(this.color, this.alpha);
+    p.ellipse(this.position.x, this.position.y, this.size, this.size);
 };
 
 //funkcja aktualizująca pozycję i kolor cząsteczek
@@ -215,16 +191,16 @@ miniGameParticle.prototype.update = function() {
 
 //cząsteczki imitujące bąbelki wodne
 var bubblesParticle = function() {
-    this.position = new PVector(processingInstance.random(10, 390), processingInstance.random(140, 370));
-    this.size = processingInstance.random(4, 8);
-    this.velocity = new PVector(processingInstance.random(0, 0), processingInstance.random(-0.2, 0));
+    this.position = new p.PVector(p.random(10, 390), p.random(140, 370));
+    this.size = p.random(4, 8);
+    this.velocity = new p.PVector(p.random(0, 0), p.random(-0.2, 0));
     
-    this.acceleration = new PVector(0, -0.005);
+    this.acceleration = new p.PVector(0, -0.005);
 };
 
 //funkcja rysująca cząsteczki
 bubblesParticle.prototype.draw = function() {
-    ellipse(this.position.x, this.position.y, this.size, this.size);
+    p.ellipse(this.position.x, this.position.y, this.size, this.size);
 };
 
 //funkcja aktualizująca pozycję i rozmiar cząsteczek
@@ -239,15 +215,15 @@ bubblesParticle.prototype.update = function() {
 
 //cząsteczki przy kontakcie haczyka z powierzchnią wody
 var waterParticle = function(y) {
-    this.position = new PVector(processingInstance.random(156, 160), y);   //przekazuje argument y z pętli rysującej fale na wodzie w funkcji draw
-    this.size = processingInstance.random(1, 4);
-    this.velocity = new PVector(processingInstance.random(-0.3, 0.3), processingInstance.random(-2, -0.5));   //cząsteczki są "wyrzucane" do góry
-    this.acceleration = new PVector(0, 0.04);   //przyspieszenie ściąga cząsteczki w dół
+    this.position = new p.PVector(p.random(156, 160), y);   //przekazuje argument y z pętli rysującej fale na wodzie w funkcji draw
+    this.size = p.random(1, 4);
+    this.velocity = new p.PVector(p.random(-0.3, 0.3), p.random(-2, -0.5));   //cząsteczki są "wyrzucane" do góry
+    this.acceleration = new p.PVector(0, 0.04);   //przyspieszenie ściąga cząsteczki w dół
 };
 
 //funkcja rysująca cząsteczki
 waterParticle.prototype.draw = function() {
-    ellipse(this.position.x, this.position.y, this.size, this.size);
+    p.ellipse(this.position.x, this.position.y, this.size, this.size);
 };
 
 //funkcja aktualizująca pozycję i rozmiar cząsteczek
@@ -260,18 +236,18 @@ waterParticle.prototype.update = function() {
 
 //konstruktor ryby
 var Fish = function() {
-    this.position = new PVector(processingInstance.random(40, 350), processingInstance.random(170, 380));
-    this.velocity = new PVector(0, 0);
-    this.size = processingInstance.random(0.5, 2); //ryby są różnej wielkości
-    this.acceleration = new PVector(0.02 * this.size, 0.01 * this.size); // przyspieszenie zależne od wielkości ryby
+    this.position = new p.PVector(p.random(40, 350), p.random(170, 380));
+    this.velocity = new p.PVector(0, 0);
+    this.size = p.random(0.5, 2); //ryby są różnej wielkości
+    this.acceleration = new p.PVector(0.02 * this.size, 0.01 * this.size); // przyspieszenie zależne od wielkości ryby
 
     this.swimmingStates = ['slowSwim', 'mediumSwim', 'fastSwim']; //tablica z różnymi stanami prędkości ryb
     this.randomSwim = 'fastSwim'; //początkowy stan prędkości ryby
 
     this.eyeX = 17;
-    this.bodyColor = color(processingInstance.random(100, 255), processingInstance.random(50, 150), processingInstance.random(50, 150)); //ryba posiada losowe ubarwienie
-    this.finColor = color(processingInstance.random(50, 150), processingInstance.random(150, 255), processingInstance.random(100, 255));
-    this.direction = new PVector(processingInstance.random(1) < 0.5 ? -1 : 1, processingInstance.random(1) < 0.5 ? -1 : 1); //warunek wybiera początkowy kierunek ruchu ryby: 1 - prawo/góra lub -1 - lewo/dół
+    this.bodyColor = p.color(p.random(100, 255), p.random(50, 150), p.random(50, 150)); //ryba posiada losowe ubarwienie
+    this.finColor = p.color(p.random(50, 150), p.random(150, 255), p.random(100, 255));
+    this.direction = new p.PVector(p.random(1) < 0.5 ? -1 : 1, p.random(1) < 0.5 ? -1 : 1); //warunek wybiera początkowy kierunek ruchu ryby: 1 - prawo/góra lub -1 - lewo/dół
 
     this.fishHooked = false;    //flaga używana do sprawdzenia czy ryba jest zahaczona
     this.fishOnTop = false;     //flaga używana do sprawdzenia czy ryba jest na górze (czy jest złapana)
@@ -284,26 +260,26 @@ var Fish = function() {
 Fish.prototype.draw = function() {
     this.angle = this.velocity.heading();  //oblicza kąt obrotu wektora prędkości względem osi X
 
-    pushMatrix();
-    translate(this.position.x, this.position.y);
-    rotate(this.angle);  //obrót ryby w kierunku, w którym płynie
-    scale(this.size, this.size * this.direction.x);  //Jeśli ryba płynie w lewo, jej skala w osi Y musi zostać pomnożona przez -1 aby ryba nie płynęła do góry (płetwami?) (skala ryby jest na minusie - obraca się poprzez lustrzane odbicie)
+    p.pushMatrix();
+    p.translate(this.position.x, this.position.y);
+    p.rotate(this.angle);  //obrót ryby w kierunku, w którym płynie
+    p.scale(this.size, this.size * this.direction.x);  //Jeśli ryba płynie w lewo, jej skala w osi Y musi zostać pomnożona przez -1 aby ryba nie płynęła do góry (płetwami?) (skala ryby jest na minusie - obraca się poprzez lustrzane odbicie)
 
     //tułów
-    stroke(0, 0, 0);
-    fill(this.bodyColor);
-    bezier(0, 0.3, 15, -7.5, 20, -7.5, 20, 0.3);
-    bezier(0, -0.3, 15, 10, 20, 7.5, 20, -0.3);
+    p.stroke(0, 0, 0);
+    p.fill(this.bodyColor);
+    p.bezier(0, 0.3, 15, -7.5, 20, -7.5, 20, 0.3);
+    p.bezier(0, -0.3, 15, 10, 20, 7.5, 20, -0.3);
 
     //oko
-    fill(0, 0, 0);
-    ellipse(this.eyeX, -1.5, 2, 2);
+    p.fill(0, 0, 0);
+    p.ellipse(this.eyeX, -1.5, 2, 2);
 
     //ogon
-    fill(this.finColor);
-    bezier(-5, -6, 2, 0, 2, 0, -5, 4);
-    noStroke();
-    popMatrix(); 
+    p.fill(this.finColor);
+    p.bezier(-5, -6, 2, 0, 2, 0, -5, 4);
+    p.noStroke();
+    p.popMatrix(); 
 };
 
 //funkcja odpowiedzialna za ruch ryb
@@ -313,16 +289,16 @@ Fish.prototype.swim = function() {
         return;
     }
 
-    if (processingInstance.random(10) <= 0.01) {
-        this.randomSwim = this.swimmingStates[floor(processingInstance.random(3))]; //wybiera losowy stan (prędkość ruchu ryby) z tablicy swimmingStates
+    if (p.random(10) <= 0.01) {
+        this.randomSwim = this.swimmingStates[p.floor(p.random(3))]; //wybiera losowy stan (prędkość ruchu ryby) z tablicy swimmingStates
     }
 
     //mała szansa na losową zmianę kierunku poruszania się ryby
-    if (processingInstance.random(10) <= 0.03) {
+    if (p.random(10) <= 0.03) {
         this.direction.y *= -1;
     }
 
-    if (processingInstance.random(10) <= 0.02) {
+    if (p.random(10) <= 0.02) {
         this.direction.x *= -1;
     }
 
@@ -340,7 +316,7 @@ Fish.prototype.swim = function() {
         this.velocity.y -= this.acceleration.y;
     }
 
-    var velocityLimit = map(this.size, 0.5, 2, 1.5, 0.5); //prędkość ryby uzależniona od wielkości ryby
+    var velocityLimit = p.map(this.size, 0.5, 2, 1.5, 0.5); //prędkość ryby uzależniona od wielkości ryby
 
     // Ograniczenie prędkości ryby w zależności od obecnego stanu prędkości poruszania się
     if (this.randomSwim === 'fastSwim') {
@@ -371,8 +347,8 @@ Fish.prototype.swim = function() {
 
     //ograniczenia dot. położenia ryby
     if (!this.fishOnTop) {
-        this.position.y = constrain(this.position.y, 150, 390);
-        //this.position.x = constrain(this.position.x, 0, 400);
+        this.position.y = p.constrain(this.position.y, 150, 390);
+        //this.position.x = p.constrain(this.position.x, 0, 400);
     }
 };
 
@@ -387,7 +363,7 @@ Fish.prototype.swimAway = function() {
     this.velocity.set(1, 0);
     this.position.add(this.velocity);
 
-    this.position.x = constrain(this.position.x, 0, 500);
+    this.position.x = p.constrain(this.position.x, 0, 500);
 
     //ryby odpływają w prawo aż do wypłynięcia poza płótno
     if(this.position.x > 500) {
@@ -402,7 +378,7 @@ Fish.prototype.swimBack = function() {
     }
 
     if (!this.targetX) {
-        this.targetX = processingInstance.random(60, 350); //miejsce do którego mają wrócić ryby
+        this.targetX = p.random(60, 350); //miejsce do którego mają wrócić ryby
     }
 
     this.direction.set(-1, 0);
@@ -412,9 +388,9 @@ Fish.prototype.swimBack = function() {
     //po dotarciu do miejsca docelowego ryby znów zaczynają pływać wg metody swim
     if(this.position.x < this.targetX){
         this.fishAway = false;
-        this.direction.set(processingInstance.random(1) < 0.5 ? -1 : 1, processingInstance.random(1) < 0.5 ? -1 : 1);
-        this.velocity = new PVector(0, 0);
-        this.randomSwim = this.swimmingStates[floor(processingInstance.random(3))];
+        this.direction.set(p.random(1) < 0.5 ? -1 : 1, p.random(1) < 0.5 ? -1 : 1);
+        this.velocity = new p.PVector(0, 0);
+        this.randomSwim = this.swimmingStates[p.floor(p.random(3))];
         this.targetX = null;
     }
 };
@@ -425,14 +401,14 @@ Fish.prototype.isHooked = function(rod, index) {
     var eyeOffsetX = this.eyeX * this.size; //dokładna pozycja oczu ryby w poziomie
     var eyeOffsetY = -1.5 * this.size; //dokładna pozycja oczu ryby w pionie
 
-    //dokładna pozycja oczu ryby eyeOffsetX i eyeOffsetY przestaje być stała, gdyż poprzez funckję rotate() w metodzie draw()
+    //dokładna pozycja oczu ryby eyeOffsetX i eyeOffsetY przestaje być stała, gdyż poprzez funckję p.rotate() w metodzie draw()
     //zmienia się kąt obrotu płótna, natomiast oko ryby pozostaje na tych samych współrzędnych. Musimy obliczyć pozycję oka po obrocie.
     //wykorzystujemy do tego wzór na obrót punktu o dany kąt: x′ = x⋅cos(θ) − y⋅sin(θ)  oraz  y′ = x⋅sin(θ) + y⋅cos(θ)
-    var rotatedEyeX = this.position.x + (eyeOffsetX * cos(this.angle) - eyeOffsetY * sin(this.angle));    //obliczenie x'
-    var rotatedEyeY = this.position.y + (eyeOffsetX * sin(this.angle) + eyeOffsetY * cos(this.angle));    //obliczenie y'
+    var rotatedEyeX = this.position.x + (eyeOffsetX * p.cos(this.angle) - eyeOffsetY * p.sin(this.angle));    //obliczenie x'
+    var rotatedEyeY = this.position.y + (eyeOffsetX * p.sin(this.angle) + eyeOffsetY * p.cos(this.angle));    //obliczenie y'
 
     //Sprawdzanie, czy haczyk i oko ryby są w odpowiedniej odległości
-    if (dist(rod.hookPos.x, rod.hookPos.y, rotatedEyeX, rotatedEyeY) < 5) {   //punktem zahaczenia haczyka jest oko ryby
+    if (p.dist(rod.hookPos.x, rod.hookPos.y, rotatedEyeX, rotatedEyeY) < 5) {   //punktem zahaczenia haczyka jest oko ryby
         this.hooked(rod, index);    //Wywołanie funkcji, jeśli haczyk jest w pobliżu
     }
 };
@@ -452,7 +428,7 @@ Fish.prototype.hooked = function(rod, index) {
         console.log(`!!fish ${index} hooked!! Hook: ${rod.hookPos.x} ${rod.hookPos.y}, FishEye: ${this.position.x - rotatedEyeY}, ${this.position.y}`);
         }*/
 
-        this.hookedTime = millis(); //jeśli ryba się zahaczy, zapisuje czas zahaczenia ryby
+        this.hookedTime = p.millis(); //jeśli ryba się zahaczy, zapisuje czas zahaczenia ryby
             //console.log(this.hookedTime);
         this.fishHooked = true;
         gamePaused = true;      //pauza gry
@@ -464,34 +440,34 @@ Fish.prototype.hooked = function(rod, index) {
 Fish.prototype.miniGame = function(rod, index) {
     hookedFishIndex = index;
 
-    if (millis() - this.hookedTime > 3000) {  //po upływie określonego czasu od zahaczenia ryby, wywołuje grę
+    if (p.millis() - this.hookedTime > 3000) {  //po upływie określonego czasu od zahaczenia ryby, wywołuje grę
 
-        fill(0, 0, 0);
-        textSize(38);
-        text("Klikaj SPACJĘ!", 70, 290);
+        p.fill(0, 0, 0);
+        p.textSize(38);
+        p.text("Klikaj SPACJĘ!", 70, 290);
 
-        fill(255, 255, 255);
-        rect(50, 300, 300, 50);//biały pasek
+        p.fill(255, 255, 255);
+        p.rect(50, 300, 300, 50);//biały pasek
 
-        fill(0, 255, 0);
-        rect(50, 300, greenRect, 50);   //zielony pasek
-        greenRect = constrain(greenRect, 0, 300);   //zielony pasek nie może wychodzić poza pasek biały
+        p.fill(0, 255, 0);
+        p.rect(50, 300, greenRect, 50);   //zielony pasek
+        greenRect = p.constrain(greenRect, 0, 300);   //zielony pasek nie może wychodzić poza pasek biały
 
-        if (frameCount % 10 === 0) {
+        if (p.frameCount % 10 === 0) {
             greenRect -= 2.3 * this.size; //im większa ryba tym ciężej ją wyłowić - pasek szybciej idzie w lewo
         }
 
-        if (keyPressed && keyCode === 32) {
+        if (p.keyPressed && p.keyCode === 32) {
             greenRect += 10;
-            keyCode = 0; // Resetowanie, aby pasek się nie zwiększał ciągle
+            p.keyCode = 0; // Resetowanie, aby pasek się nie zwiększał ciągle
             for (var i = 0; i < 5; i++) {
                 miniGameParticles.push(new miniGameParticle()); //cząsteczki z każdym kliknięciem
             }
         }
     } else {
-        fill(0, 0, 0);
-        textSize(28);
-        text('Ryba zahaczona, przygotuj się', 10, 160); //przed upływem określonego czasu pojawia się napis
+        p.fill(0, 0, 0);
+        p.textSize(28);
+        p.text('Ryba zahaczona, przygotuj się', 10, 160); //przed upływem określonego czasu pojawia się napis
     }
 
     //jeśli zielony pasek dotrze do końca, ryba zostaje złapana, a gra zostaje wznowiona
@@ -504,10 +480,10 @@ Fish.prototype.miniGame = function(rod, index) {
         hookedFishIndex = -1;
         greenRect = 150;
         miniGameParticles = []; //zerowanie ilości cząsteczek
-        this.position = new PVector(processingInstance.random(20, 70), processingInstance.random(110, 120)); //złapana ryba zostaje przeniesiona na pomost
-        this.direction = new PVector(processingInstance.random(1) < 0.5 ? -1 : 1, -1);
-        this.velocity = new PVector(0, 0);
-        this.acceleration = new PVector(0, 0);
+        this.position = new p.PVector(p.random(20, 70), p.random(110, 120)); //złapana ryba zostaje przeniesiona na pomost
+        this.direction = new p.PVector(p.random(1) < 0.5 ? -1 : 1, -1);
+        this.velocity = new p.PVector(0, 0);
+        this.acceleration = new p.PVector(0, 0);
 
     }
 
@@ -531,10 +507,10 @@ Fish.prototype.miniGame = function(rod, index) {
 var NightFish = function() {
     Fish.call(this);
 
-    this.position = new PVector(processingInstance.random(460, 480), processingInstance.random(170, 380)); // ryby nocne na początku gry są poza płótnem
+    this.position = new p.PVector(p.random(460, 480), p.random(170, 380)); // ryby nocne na początku gry są poza płótnem
 
-    this.bodyColor = color(processingInstance.random(20, 100), processingInstance.random(10, 80), processingInstance.random(10, 80)); //ryby nocne mają ciemniejsze kolory
-    this.finColor = color(processingInstance.random(10, 80), processingInstance.random(80, 200), processingInstance.random(50, 200));
+    this.bodyColor = p.color(p.random(20, 100), p.random(10, 80), p.random(10, 80)); //ryby nocne mają ciemniejsze kolory
+    this.finColor = p.color(p.random(10, 80), p.random(80, 200), p.random(50, 200));
 
     this.nightFishAway = false; //flaga używana do sprawdzenia czy na płótnie jest odpowiedni rodzaj ryby
 };
@@ -553,7 +529,7 @@ NightFish.prototype.swimAway = function() {
     this.velocity.set(1, 0);
     this.position.add(this.velocity);
 
-    this.position.x = constrain(this.position.x, 0, 500);
+    this.position.x = p.constrain(this.position.x, 0, 500);
 
     if(this.position.x > 500) {
         this.velocity.set(0, 0);
@@ -567,7 +543,7 @@ NightFish.prototype.swimBack = function() {
     }
 
     if (!this.targetX) {
-        this.targetX = processingInstance.random(60, 350); //miejsce do którego mają wrócić ryby
+        this.targetX = p.random(60, 350); //miejsce do którego mają wrócić ryby
     }
 
     this.direction.set(-1, 0);
@@ -576,9 +552,9 @@ NightFish.prototype.swimBack = function() {
 
     if (this.position.x < this.targetX) {
         this.nightFishAway = false;
-        this.direction.set(processingInstance.random(1) < 0.5 ? -1 : 1, processingInstance.random(1) < 0.5 ? -1 : 1);
-        this.velocity = new PVector(0, 0);
-        this.randomSwim = this.swimmingStates[floor(processingInstance.random(3))];
+        this.direction.set(p.random(1) < 0.5 ? -1 : 1, p.random(1) < 0.5 ? -1 : 1);
+        this.velocity = new p.PVector(0, 0);
+        this.randomSwim = this.swimmingStates[p.floor(p.random(3))];
         this.targetX = null;
     }
 };
@@ -598,7 +574,7 @@ NightFish.prototype.hooked = function(rod, index) {
         console.log(`!!fish ${index} hooked!! Hook: ${rod.hookPos.x} ${rod.hookPos.y}, FishEye: ${this.position.x - rotatedEyeY}, ${this.position.y}`);
         }*/
     
-        this.hookedTime = millis(); //jeśli ryba się zahaczy, zapisuje czas zahaczenia ryby
+        this.hookedTime = p.millis(); //jeśli ryba się zahaczy, zapisuje czas zahaczenia ryby
             //console.log(this.hookedTime);
         this.fishHooked = true;
         gamePaused = true;      //pauza gry
@@ -610,35 +586,35 @@ NightFish.prototype.hooked = function(rod, index) {
 NightFish.prototype.miniGame = function(rod, index) {
     hookedNightFishIndex = index;
 
-    if (millis() - this.hookedTime > 3000) {  //po upływie określonego czasu od zahaczenia ryby, wywołuje grę
+    if (p.millis() - this.hookedTime > 3000) {  //po upływie określonego czasu od zahaczenia ryby, wywołuje grę
 
-        fill(0, 0, 0);
-        textSize(38);
-        text("Klikaj SPACJĘ!", 70, 290);
+        p.fill(0, 0, 0);
+        p.textSize(38);
+        p.text("Klikaj SPACJĘ!", 70, 290);
         
-        fill(255, 255, 255, 150);
-        rect(50, 300, 300, 50); //biały pasek
+        p.fill(255, 255, 255, 150);
+        p.rect(50, 300, 300, 50); //biały pasek
     
-        fill(0, 180, 0);
-        rect(50, 300, greenRect, 50);   //zielony pasek
+        p.fill(0, 180, 0);
+        p.rect(50, 300, greenRect, 50);   //zielony pasek
 
-        greenRect = constrain(greenRect, 0, 300);   //zielony pasek nie może wychodzić poza pasek biały
+        greenRect = p.constrain(greenRect, 0, 300);   //zielony pasek nie może wychodzić poza pasek biały
     
-        if (frameCount % 10 === 0) {
+        if (p.frameCount % 10 === 0) {
             greenRect -= 2.3 * this.size; //im większa ryba tym ciężej ją wyłowić - pasek szybciej idzie w lewo
         }
 
-        if (keyPressed && keyCode === 32) {
+        if (p.keyPressed && p.keyCode === 32) {
             greenRect += 10;
-            keyCode = 0; // Resetowanie, aby pasek się nie zwiększał ciągle
+            p.keyCode = 0; // Resetowanie, aby pasek się nie zwiększał ciągle
             for (var i = 0; i < 5; i++) {
                 miniGameParticles.push(new miniGameParticle()); //cząsteczki z każdym kliknięciem
             }
         }
     } else {
-        fill(0, 0, 0);
-        textSize(28);
-        text('Ryba zahaczona, przygotuj się', 10, 160); //przed upływem określonego czasu pojawia się napis
+        p.fill(0, 0, 0);
+        p.textSize(28);
+        p.text('Ryba zahaczona, przygotuj się', 10, 160); //przed upływem określonego czasu pojawia się napis
     }
 
     //jeśli zielony pasek dotrze do końca, ryba zostaje złapana, a gra zostaje wznowiona
@@ -651,10 +627,10 @@ NightFish.prototype.miniGame = function(rod, index) {
         hookedNightFishIndex = -1;
         greenRect = 150;
         miniGameParticles = []; //zerowanie ilości cząsteczek
-        this.position = new PVector(processingInstance.random(20, 70), processingInstance.random(110, 120)); //złapana ryba zostaje przeniesiona na pomost
-        this.direction = new PVector(processingInstance.random(1) < 0.5 ? -1 : 1, -1);
-        this.velocity = new PVector(0, 0);
-        this.acceleration = new PVector(0, 0);
+        this.position = new p.PVector(p.random(20, 70), p.random(110, 120)); //złapana ryba zostaje przeniesiona na pomost
+        this.direction = new p.PVector(p.random(1) < 0.5 ? -1 : 1, -1);
+        this.velocity = new p.PVector(0, 0);
+        this.acceleration = new p.PVector(0, 0);
     }
 
     //jeśli zielony pasek spadnie do zera, ryba nie zostaje złapana, a gra zostaje wznowiona
@@ -675,20 +651,20 @@ NightFish.prototype.miniGame = function(rod, index) {
 
 //konstruktor drzewa
 var Tree = function() {
-    this.x = processingInstance.random(0, 385);
-    this.y = processingInstance.random(80, 115);
-    this.treeHeight = processingInstance.random(2, 50);
-    this.treeWidth = processingInstance.random(4, 7);
-    this.woodColor = color(74, 40, 0);
-    this.woodNightColor = color(33, 18, 0);
-    this.leafColor = color(30, 128, 0);
-    this.leafNightColor = color(17, 54, 0);
+    this.x = p.random(0, 385);
+    this.y = p.random(80, 115);
+    this.treeHeight = p.random(2, 50);
+    this.treeWidth = p.random(4, 7);
+    this.woodColor = p.color(74, 40, 0);
+    this.woodNightColor = p.color(33, 18, 0);
+    this.leafColor = p.color(30, 128, 0);
+    this.leafNightColor = p.color(17, 54, 0);
 
     this.leafs = [];    //tablica zawierająca liście od drzewa
 
     //dodanie współrzędnych 30 liści do tablicy
     for (var i = 0; i < 30; i++) {
-        this.leafs.push({x: this.x + processingInstance.random(-10, 10), y: this.y - this.treeHeight / 2 + processingInstance.random(-10, 10), angle: processingInstance.random(-30, 30)});
+        this.leafs.push({x: this.x + p.random(-10, 10), y: this.y - this.treeHeight / 2 + p.random(-10, 10), angle: p.random(-30, 30)});
     }
 };
 
@@ -697,11 +673,11 @@ Tree.prototype.draw = function() {
     
     rectMode(CENTER);
     if (isDay) {
-        fill(lerpColor(this.woodColor, this.woodNightColor, t));
+        p.fill(p.lerpColor(this.woodColor, this.woodNightColor, t));
     } else {
-        fill(lerpColor(this.woodNightColor, this.woodColor, t2));
+        p.fill(p.lerpColor(this.woodNightColor, this.woodColor, t2));
     }
-    rect(this.x, this.y, this.treeWidth, this.treeHeight);
+    p.rect(this.x, this.y, this.treeWidth, this.treeHeight);
     rectMode(CORNER);
 
     this.drawLeaf();    //wywołanie funkcji rysującą liście dla każego drzewa
@@ -711,24 +687,24 @@ Tree.prototype.draw = function() {
 Tree.prototype.drawLeaf = function() {
 
     for (var i = 0; i < this.leafs.length; i++) {
-        pushMatrix();
-        translate(this.leafs[i].x, this.leafs[i].y);
-        rotate(radians(this.leafs[i].angle));
+        p.pushMatrix();
+        p.translate(this.leafs[i].x, this.leafs[i].y);
+        p.rotate(p.radians(this.leafs[i].angle));
 
         if (isDay) {
-            fill(lerpColor(this.leafColor, this.leafNightColor, t));
+            p.fill(p.lerpColor(this.leafColor, this.leafNightColor, t));
         } else {
-            fill(lerpColor(this.leafNightColor, this.leafColor, t2));
+            p.fill(p.lerpColor(this.leafNightColor, this.leafColor, t2));
         }
-        ellipse(0, 0, 5, 10);
-        popMatrix();
+        p.ellipse(0, 0, 5, 10);
+        p.popMatrix();
     }
 };
 
 //tablice przechowujące atrybuty dla gwiazd, drzew, bąbelków, wodorostów, kamieni, ryb oraz cząsteczek
 var stars = [];
 for (var i = 0; i < 40; i++) {
-    stars.push({x: processingInstance.random(400), y: processingInstance.random(80), size: 2});
+    stars.push({x: p.random(400), y: p.random(80), size: 2});
 }
 
 var trees = [];
@@ -743,12 +719,12 @@ for (var i = 0; i < 20; i++) {
 
 var seaweed = [];
 for (var i = 0; i < 15; i++) {
-    seaweed.push({x: 200, y: processingInstance.random(-200, 200), height: processingInstance.random(20, 300), width: processingInstance.random(2, 5)});
+    seaweed.push({x: 200, y: p.random(-200, 200), height: p.random(20, 300), width: p.random(2, 5)});
 }
 
 var rocks = [];
 for (var i = 0; i < 4; i++) {
-    rocks.push({x: processingInstance.random(10, 350), y: 385, width:processingInstance.random(20, 70), height: processingInstance.random(15, 100)});
+    rocks.push({x: p.random(10, 350), y: 385, width:p.random(20, 70), height: p.random(15, 100)});
 }
 
 var fish = [];
@@ -780,8 +756,8 @@ var dayTime = 0; //0-60 - dzień, 60-120 - noc
 var daySpeed = 0.0167;  //prędkość słońca na płótnie
 var sunX = 438;
 var moonX = 420;
-var sunSpeed = map(daySpeed, 0, 60, 0, 465); //polecenie mapujące zmienną daySpeed z zakresu od 0 do 60 do zakresu od 0 do 465 (użyte aby słońce poruszało się równo z upływem czasu)
-var moonSpeed = map(daySpeed, 0, 60, 0, 430); //polecenie mapujące zmienną daySpeed z zakresu od 0 do 60 do zakresu od 0 do 430 (użyte aby księżyc poruszało się równo z upływem czasu)
+var sunSpeed = p.map(daySpeed, 0, 60, 0, 465); //polecenie mapujące zmienną daySpeed z zakresu od 0 do 60 do zakresu od 0 do 465 (użyte aby słońce poruszało się równo z upływem czasu)
+var moonSpeed = p.map(daySpeed, 0, 60, 0, 430); //polecenie mapujące zmienną daySpeed z zakresu od 0 do 60 do zakresu od 0 do 430 (użyte aby księżyc poruszało się równo z upływem czasu)
 var sunRotate = 0;  //obrót promieni słonecznych wokół słońca
 var moonRotate = 0; //obrót księżyca wokół własnej osi
 
@@ -799,24 +775,24 @@ var waveAmplitude = 5;
 var angle;
 
 //kolory
-var skyColor = color(100, 212, 253);
-var nightSkyColor = color(19, 24, 98);
-var landscapeColor = color(0, 173, 0);
-var landscapeNightColor = color(0, 77, 0);
-var cloudColor = color(255, 255, 255, 200);
-var cloudNightColor = color(35, 36, 59, 200);
-var waterColor = color(0, 255, 255);
-var waterNightColor = color(29, 52, 135);
-var bridgeColor = color(58, 32, 15);
-var bridgeNightColor = color(31, 16, 6);
-var starsColor = color(100, 212, 253);
-var starsNightColor = color(255, 255, 255);
-var sandColor = color(255, 236, 189);
-var sandNightColor = color(69, 51, 25);
-var seaweedColor = color(0, 110, 0);
-var seaweedNightColor = color(0, 64, 0);
-var rockColor = color(73, 73, 72);
-var rockNightColor = color(33, 33, 33);
+var skyColor = p.noStroke(100, 212, 253);
+var nightSkyColor = p.noStroke(19, 24, 98);
+var landscapeColor = p.noStroke(0, 173, 0);
+var landscapeNightColor = p.noStroke(0, 77, 0);
+var cloudColor = p.noStroke(255, 255, 255, 200);
+var cloudNightColor = p.noStroke(35, 36, 59, 200);
+var waterColor = p.noStroke(0, 255, 255);
+var waterNightColor = p.noStroke(29, 52, 135);
+var bridgeColor = p.noStroke(58, 32, 15);
+var bridgeNightColor = p.noStroke(31, 16, 6);
+var starsColor = p.noStroke(100, 212, 253);
+var starsNightColor = p.noStroke(255, 255, 255);
+var sandColor = p.noStroke(255, 236, 189);
+var sandNightColor = p.noStroke(69, 51, 25);
+var seaweedColor = p.noStroke(0, 110, 0);
+var seaweedNightColor = p.noStroke(0, 64, 0);
+var rockColor = p.noStroke(73, 73, 72);
+var rockNightColor = p.noStroke(33, 33, 33);
 
 //zmienne używane do określenia prędkości płynnych przejść między kolorami
 var t = 0;
@@ -829,7 +805,7 @@ window.dayMusicListenerAdded = false;
 
 //funkcja odpowiadająca za dzień
 day = function(){
-    background(lerpColor(skyColor, nightSkyColor, t)); //niebo (lerpColor płynnie zmienia kolor)
+    p.background(p.lerpColor(skyColor, nightSkyColor, t)); //niebo (p.lerpColor płynnie zmienia kolor)
     nightMusic.pause(); //pauza muzyki nocnej
 
     if (!window.dayMusicListenerAdded) {
@@ -842,165 +818,165 @@ day = function(){
 
     //rysowanie gwiazd (w dzień nie są widoczne, ukazują się podczas zachodu słońca)
     for(var i = 0; i < stars.length; i++){
-        fill(lerpColor(starsColor, starsNightColor, t));
-        ellipse(stars[i].x, stars[i].y, stars[i].size, stars[i].size);
+        p.fill(p.lerpColor(starsColor, starsNightColor, t));
+        p.ellipse(stars[i].x, stars[i].y, stars[i].size, stars[i].size);
     }
 
-    pushMatrix();
-    translate(0, -60);
-    fill(lerpColor(landscapeColor, landscapeNightColor, t));
-    beginShape();   //krajobraz
-    vertex(0, 265); vertex(0, 131); vertex(36, 134); vertex(77, 143); vertex(132, 157); vertex(179, 138); vertex(218, 125);
-     vertex(271, 131); vertex(320, 131); vertex(348, 145); vertex(400, 148); vertex(400, 242);
-    endShape(CLOSE);
-    popMatrix();
+    p.pushMatrix();
+    p.translate(0, -60);
+    p.fill(p.lerpColor(landscapeColor, landscapeNightColor, t));
+    p.beginShape();   //krajobraz
+    p.vertex(0, 265); p.vertex(0, 131); p.vertex(36, 134); p.vertex(77, 143); p.vertex(132, 157); p.vertex(179, 138); p.vertex(218, 125);
+     p.vertex(271, 131); p.vertex(320, 131); p.vertex(348, 145); p.vertex(400, 148); p.vertex(400, 242);
+    p.endShape(CLOSE);
+    p.popMatrix();
 
-    fill(255, 255, 0);
-    ellipse(sunX, 30, 40, 40); //słońce
+    p.fill(255, 255, 0);
+    p.ellipse(sunX, 30, 40, 40); //słońce
     if(!gamePaused) {
         sunX -= sunSpeed;   //słońce przesuwa się w lewo
     }
 
     //promienie słoneczne
     for (var i = 0; i < 360; i+=30) {    //360 stopni, każdy promień co 30°
-        pushMatrix();
-        translate(sunX, 30);
-        rotate(radians(i)); //położenie promieni co 30°
-        rotate(radians(sunRotate)); //dynamiczny obrót promieni wokół słońca
-        rect(20, 0, 20, 5);
-        popMatrix();
+        p.pushMatrix();
+        p.translate(sunX, 30);
+        p.rotate(p.radians(i)); //położenie promieni co 30°
+        p.rotate(p.radians(sunRotate)); //dynamiczny obrót promieni wokół słońca
+        p.rect(20, 0, 20, 5);
+        p.popMatrix();
     }
     if(!gamePaused) {
         sunRotate -= 0.15; //prędkość obrotu promieni wokół słońca
     }
 
-    fill(lerpColor(cloudColor, cloudNightColor, t));
-    pushMatrix();
-    translate(cloudX, cloudY);
-    beginShape();   //chmura 1
-     vertex(58,56); vertex(63,47); vertex(69,43); vertex(77,42); vertex(84,45); vertex(92,48); vertex(94,50); vertex(97,45); vertex(104,41); vertex(114,40); vertex(124,45); vertex(130,51); vertex(135,51); 
-     vertex(149,47); vertex(160,48); vertex(167,55); vertex(163,66); vertex(149,76); vertex(136,76); vertex(130,74); vertex(129,78); vertex(122,82); vertex(114,84); vertex(105,78); vertex(101,73); vertex(99,75); 
-     vertex(92,82); vertex(84,83); vertex(73,78); vertex(70,74); vertex(66,70); vertex(61,68); vertex(47,74); vertex(39,73); vertex(34,61); vertex(36,52); vertex(49,49); vertex(59,48); vertex(61,48); vertex(64,50);
-    endShape(CLOSE);
-    popMatrix();
+    p.fill(p.lerpColor(cloudColor, cloudNightColor, t));
+    p.pushMatrix();
+    p.translate(cloudX, cloudY);
+    p.beginShape();   //chmura 1
+     p.vertex(58,56); p.vertex(63,47); p.vertex(69,43); p.vertex(77,42); p.vertex(84,45); p.vertex(92,48); p.vertex(94,50); p.vertex(97,45); p.vertex(104,41); p.vertex(114,40); p.vertex(124,45); p.vertex(130,51); p.vertex(135,51); 
+     p.vertex(149,47); p.vertex(160,48); p.vertex(167,55); p.vertex(163,66); p.vertex(149,76); p.vertex(136,76); p.vertex(130,74); p.vertex(129,78); p.vertex(122,82); p.vertex(114,84); p.vertex(105,78); p.vertex(101,73); p.vertex(99,75); 
+     p.vertex(92,82); p.vertex(84,83); p.vertex(73,78); p.vertex(70,74); p.vertex(66,70); p.vertex(61,68); p.vertex(47,74); p.vertex(39,73); p.vertex(34,61); p.vertex(36,52); p.vertex(49,49); p.vertex(59,48); p.vertex(61,48); p.vertex(64,50);
+    p.endShape(CLOSE);
+    p.popMatrix();
 
-    pushMatrix();
-    translate(cloudX2, cloudY2);
-    beginShape();   //chmura 2
-     vertex(123,13); vertex(133,9); vertex(148,6); vertex(161,8); vertex(171,15); vertex(173,19); vertex(166,27); vertex(150,32); 
-     vertex(133,34); vertex(109,30); vertex(93,24); vertex(89,18); vertex(96,6); vertex(115,4); vertex(129,4); vertex(143,7); vertex(150,10);
-    endShape(CLOSE);
-    popMatrix();
+    p.pushMatrix();
+    p.translate(cloudX2, cloudY2);
+    p.beginShape();   //chmura 2
+     p.vertex(123,13); p.vertex(133,9); p.vertex(148,6); p.vertex(161,8); p.vertex(171,15); p.vertex(173,19); p.vertex(166,27); p.vertex(150,32); 
+     p.vertex(133,34); p.vertex(109,30); p.vertex(93,24); p.vertex(89,18); p.vertex(96,6); p.vertex(115,4); p.vertex(129,4); p.vertex(143,7); p.vertex(150,10);
+    p.endShape(CLOSE);
+    p.popMatrix();
 
     for (var i = 0; i < trees.length; i++) {
         trees[i].draw();    //drzewa
     }
 
-    noStroke();
-    fill(lerpColor(waterColor, waterNightColor, t));
-    rect(0, 160, 400, 300); //woda
+    p.noStroke();
+    p.fill(p.lerpColor(waterColor, waterNightColor, t));
+    p.rect(0, 160, 400, 300); //woda
     
-    fill(lerpColor(bridgeColor, bridgeNightColor, t));
-    rect(0, 115, 120, 20); //pomost
+    p.fill(p.lerpColor(bridgeColor, bridgeNightColor, t));
+    p.rect(0, 115, 120, 20); //pomost
 
     //ludzik
-    pushMatrix();
-    translate(100, -10);
-    fill(0, 0, 0);
-    ellipse(0, 72, 20, 20);
-    rotate(radians(90));
-    rect(80, 0, 30, 5);
-    rotate(radians(45));
-    rect(75, -75, 30, 5);
-    rotate(radians(60));
-    rect(-40, -92, 20, 5);
-    rotate(radians(30));
-    rect(-100, -80, 30, 5);
-    rotate(radians(135));
-    rect(-5, 85, 30, 5);
-    popMatrix();
+    p.pushMatrix();
+    p.translate(100, -10);
+    p.fill(0, 0, 0);
+    p.ellipse(0, 72, 20, 20);
+    p.rotate(p.radians(90));
+    p.rect(80, 0, 30, 5);
+    p.rotate(p.radians(45));
+    p.rect(75, -75, 30, 5);
+    p.rotate(p.radians(60));
+    p.rect(-40, -92, 20, 5);
+    p.rotate(p.radians(30));
+    p.rect(-100, -80, 30, 5);
+    p.rotate(p.radians(135));
+    p.rect(-5, 85, 30, 5);
+    p.popMatrix();
 };
 
 //funkcja odpowiadająca za noc
 night = function(){
-    background(lerpColor(nightSkyColor, skyColor, t2)); //płynne przejście koloru nieba na ciemny
+    p.background(p.lerpColor(nightSkyColor, skyColor, t2)); //płynne przejście koloru nieba na ciemny
     dayMusic.pause();
     nightMusic.play(); //muzyka nocna w tle
     nightMusic.volume = 0.5;
 
     for(var i = 0; i < stars.length; i++){
-        fill(lerpColor(starsNightColor, starsColor, t2));
-        ellipse(stars[i].x, stars[i].y, stars[i].size, stars[i].size);  //gwiazdy
+        p.fill(p.lerpColor(starsNightColor, starsColor, t2));
+        p.ellipse(stars[i].x, stars[i].y, stars[i].size, stars[i].size);  //gwiazdy
     }
 
-    fill(148, 144, 141);
-    stroke();
-    strokeWeight(1);
-    pushMatrix();
-    translate(moonX, 30);
-    rotate(radians(moonRotate));    //obrót księżyca wokół własnej osi
-    ellipse(0, 0, 40, 40); //księżyc
-    fill(194, 190, 188);
-    ellipse(2, 2, 2, 2); ellipse(8, 12, 2, 2); ellipse(17, -5, 2, 2); ellipse(-10, -12, 2, 2);  ellipse(-5, 5, 2, 2); ellipse(-15, 10, 2, 2); ellipse(5, -10, 2, 2); ellipse(0, 15, 2, 2); ellipse(-15, -2, 2, 2); 
-    noStroke();
-    popMatrix();
+    p.fill(148, 144, 141);
+    p.stroke();
+    p.strokeWeight(1);
+    p.pushMatrix();
+    p.translate(moonX, 30);
+    p.rotate(p.radians(moonRotate));    //obrót księżyca wokół własnej osi
+    p.ellipse(0, 0, 40, 40); //księżyc
+    p.fill(194, 190, 188);
+    p.ellipse(2, 2, 2, 2); p.ellipse(8, 12, 2, 2); p.ellipse(17, -5, 2, 2); p.ellipse(-10, -12, 2, 2);  p.ellipse(-5, 5, 2, 2); p.ellipse(-15, 10, 2, 2); p.ellipse(5, -10, 2, 2); p.ellipse(0, 15, 2, 2); p.ellipse(-15, -2, 2, 2); 
+    p.noStroke();
+    p.popMatrix();
     if(!gamePaused) {
         moonX -= moonSpeed; //księżyc przesuwa się w lewo
         moonRotate -= 0.08;
     }
 
-    pushMatrix();
-    translate(cloudX, cloudY)
-    fill(lerpColor(cloudNightColor, cloudColor, t2));
-    beginShape();   //chmura 1
-     vertex(58,56); vertex(63,47); vertex(69,43); vertex(77,42); vertex(84,45); vertex(92,48); vertex(94,50); vertex(97,45); vertex(104,41); vertex(114,40); vertex(124,45); vertex(130,51); vertex(135,51); 
-     vertex(149,47); vertex(160,48); vertex(167,55); vertex(163,66); vertex(149,76); vertex(136,76); vertex(130,74); vertex(129,78); vertex(122,82); vertex(114,84); vertex(105,78); vertex(101,73); vertex(99,75); 
-     vertex(92,82); vertex(84,83); vertex(73,78); vertex(70,74); vertex(66,70); vertex(61,68); vertex(47,74); vertex(39,73); vertex(34,61); vertex(36,52); vertex(49,49); vertex(59,48); vertex(61,48); vertex(64,50);
-    endShape(CLOSE);
+    p.pushMatrix();
+    p.translate(cloudX, cloudY)
+    p.fill(p.lerpColor(cloudNightColor, cloudColor, t2));
+    p.beginShape();   //chmura 1
+     p.vertex(58,56); p.vertex(63,47); p.vertex(69,43); p.vertex(77,42); p.vertex(84,45); p.vertex(92,48); p.vertex(94,50); p.vertex(97,45); p.vertex(104,41); p.vertex(114,40); p.vertex(124,45); p.vertex(130,51); p.vertex(135,51); 
+     p.vertex(149,47); p.vertex(160,48); p.vertex(167,55); p.vertex(163,66); p.vertex(149,76); p.vertex(136,76); p.vertex(130,74); p.vertex(129,78); p.vertex(122,82); p.vertex(114,84); p.vertex(105,78); p.vertex(101,73); p.vertex(99,75); 
+     p.vertex(92,82); p.vertex(84,83); p.vertex(73,78); p.vertex(70,74); p.vertex(66,70); p.vertex(61,68); p.vertex(47,74); p.vertex(39,73); p.vertex(34,61); p.vertex(36,52); p.vertex(49,49); p.vertex(59,48); p.vertex(61,48); p.vertex(64,50);
+    p.endShape(CLOSE);
 
-    translate(cloudX2, cloudY2);
-    beginShape();   //chmura 2
-     vertex(123,13); vertex(133,9); vertex(148,6); vertex(161,8); vertex(171,15); vertex(173,19); vertex(166,27); vertex(150,32); 
-     vertex(133,34); vertex(109,30); vertex(93,24); vertex(89,18); vertex(96,6); vertex(115,4); vertex(129,4); vertex(143,7); vertex(150,10);
-    endShape(CLOSE);
-    popMatrix();
+    p.translate(cloudX2, cloudY2);
+    p.beginShape();   //chmura 2
+     p.vertex(123,13); p.vertex(133,9); p.vertex(148,6); p.vertex(161,8); p.vertex(171,15); p.vertex(173,19); p.vertex(166,27); p.vertex(150,32); 
+     p.vertex(133,34); p.vertex(109,30); p.vertex(93,24); p.vertex(89,18); p.vertex(96,6); p.vertex(115,4); p.vertex(129,4); p.vertex(143,7); p.vertex(150,10);
+    p.endShape(CLOSE);
+    p.popMatrix();
     
-    pushMatrix();
-    translate(0, -60);
-    fill(lerpColor(landscapeNightColor, landscapeColor, t2));
-    beginShape();   //krajobraz
-     vertex(0, 296);vertex(0, 279);vertex(0, 265);vertex(0, 131);vertex(36, 134);vertex(77, 143);vertex(132, 157);vertex(179, 138);
-     vertex(218, 125);vertex(271, 131);vertex(320, 131);vertex(348, 153);vertex(400, 166);vertex(400, 242);
-    endShape(CLOSE);
-    popMatrix();
+    p.pushMatrix();
+    p.translate(0, -60);
+    p.fill(p.lerpColor(landscapeNightColor, landscapeColor, t2));
+    p.beginShape();   //krajobraz
+     p.vertex(0, 296);p.vertex(0, 279);p.vertex(0, 265);p.vertex(0, 131);p.vertex(36, 134);p.vertex(77, 143);p.vertex(132, 157);p.vertex(179, 138);
+     p.vertex(218, 125);p.vertex(271, 131);p.vertex(320, 131);p.vertex(348, 153);p.vertex(400, 166);p.vertex(400, 242);
+    p.endShape(CLOSE);
+    p.popMatrix();
 
     for (var i = 0; i < trees.length; i++) {
         trees[i].draw();    //drzewa
     }
 
-    noStroke();
-    fill(lerpColor(waterNightColor, waterColor, t2));
-    rect(0, 160, 400, 300); //woda
+    p.noStroke();
+    p.fill(p.lerpColor(waterNightColor, waterColor, t2));
+    p.rect(0, 160, 400, 300); //woda
     
-    fill(lerpColor(bridgeNightColor, bridgeColor, t2));
-    rect(0, 115, 120, 20); //pomost
+    p.fill(p.lerpColor(bridgeNightColor, bridgeColor, t2));
+    p.rect(0, 115, 120, 20); //pomost
 
     //ludzik
-    pushMatrix();
-    translate(100, -10);
-    fill(0, 0, 0);
-    ellipse(0, 72, 20, 20);
-    rotate(radians(90));
-    rect(80, 0, 30, 5);
-    rotate(radians(45));
-    rect(75, -75, 30, 5);
-    rotate(radians(60));
-    rect(-40, -92, 20, 5);
-    rotate(radians(30));
-    rect(-100, -80, 30, 5);
-    rotate(radians(135));
-    rect(-5, 85, 30, 5);
-    popMatrix();
+    p.pushMatrix();
+    p.translate(100, -10);
+    p.fill(0, 0, 0);
+    p.ellipse(0, 72, 20, 20);
+    p.rotate(p.radians(90));
+    p.rect(80, 0, 30, 5);
+    p.rotate(p.radians(45));
+    p.rect(75, -75, 30, 5);
+    p.rotate(p.radians(60));
+    p.rect(-40, -92, 20, 5);
+    p.rotate(p.radians(30));
+    p.rect(-100, -80, 30, 5);
+    p.rotate(p.radians(135));
+    p.rect(-5, 85, 30, 5);
+    p.popMatrix();
 };
 
 var onlyOnce = true; //zmienna pomocnicza, aby dźwięk fanfar nie odtwarzał się w kółko
@@ -1013,15 +989,15 @@ reset = function() {
         onlyOnce = false;
     }
 
-    fill(200, 50, 50);
-    rect(50, 200, 300, 100, 10);
+    p.fill(200, 50, 50);
+    p.rect(50, 200, 300, 100, 10);
 
-    fill(255, 255, 255);
-    textSize(20);
-    text("  Naciśnij ENTER, jeśli\nchcesz zacząć od nowa!", 90, 250);
+    p.fill(255, 255, 255);
+    p.textSize(20);
+    p.text("  Naciśnij ENTER, jeśli\nchcesz zacząć od nowa!", 90, 250);
 
     //reset gry po naciśnięciu ENTER
-    if (keyPressed && keyCode == 10) {
+    if (p.keyPressed && p.keyCode == 10) {
         rod.fishCaught = 0;
         gamePaused = false;
         hookedFishIndex = -1;
@@ -1047,14 +1023,14 @@ reset = function() {
 
 //główna funkcja rysująca
 draw = function() {
-    if(processingInstance.random(2000) < 1){
+    if(p.random(2000) < 1){
         Bubbles.volume = 0.4;
         Bubbles.play(); //efekt dźwiękowy bąbelków co jakiś czas
     }
 
     //funkcja mapuje wartości sunset i moonset z zakresu 0-15 do zakresu 0-1 (używane później w płynnych przejściach kolorów między dniem i nocą)
-    t = map(sunset, 0, 15, 0, 1);
-    t2 = map(moonset, 0, 15, 0, 1);
+    t = p.map(sunset, 0, 15, 0, 1);
+    t2 = p.map(moonset, 0, 15, 0, 1);
 
 
     if (!gamePaused) {
@@ -1115,11 +1091,11 @@ draw = function() {
             isDay = false;
         }
     
-    //zmiana położenia chmur za pomocą funkcji noise() - sprawia, że chmury poruszają się naturalniej i płynniej
-    var cloudNoiseWidth = map(noise(cloudTimeX), 0, 1, -150, 150);
-    var cloudNoiseHeight = map(noise(cloudTimeY), 0, 1, -60, -10);
-    var cloudNoiseWidth2 = map(noise(cloudTimeX2), 0, 1, 100, 250);
-    var cloudNoiseHeight2 = map(noise(cloudTimeY2), 0, 1, 0, 40);
+    //zmiana położenia chmur za pomocą funkcji p.noise() - sprawia, że chmury poruszają się naturalniej i płynniej
+    var cloudNoiseWidth = p.map(p.noise(cloudTimeX), 0, 1, -150, 150);
+    var cloudNoiseHeight = p.map(p.noise(cloudTimeY), 0, 1, -60, -10);
+    var cloudNoiseWidth2 = p.map(p.noise(cloudTimeX2), 0, 1, 100, 250);
+    var cloudNoiseHeight2 = p.map(p.noise(cloudTimeY2), 0, 1, 0, 40);
 
     //współrzędne chmur
     cloudX = cloudNoiseWidth;
@@ -1141,14 +1117,14 @@ draw = function() {
 
     //zmiana koloru piasku w zależności od pory dnia
     if (isDay) {
-        fill(lerpColor(sandColor, sandNightColor, t));
+        p.fill(p.lerpColor(sandColor, sandNightColor, t));
     } else {
-        fill(lerpColor(sandNightColor, sandColor, t2));
+        p.fill(p.lerpColor(sandNightColor, sandColor, t2));
     }
-    beginShape();   //piasek na dnie wody
-     vertex(0,400); vertex(0,383); vertex(1,383); vertex(11,381); vertex(23,376); vertex(39,372); vertex(64,370); vertex(91,376); vertex(108,380); vertex(130,380); vertex(150,382); vertex(166,381); vertex(193,378);
-     vertex(217,374); vertex(229,376); vertex(252,379); vertex(279,386); vertex(310,393); vertex(324,393); vertex(341,394); vertex(365,392); vertex(381,388); vertex(390,383); vertex(400,386); vertex(400,400);
-    endShape(CLOSE);
+    p.beginShape();   //piasek na dnie wody
+     p.vertex(0,400); p.vertex(0,383); p.vertex(1,383); p.vertex(11,381); p.vertex(23,376); p.vertex(39,372); p.vertex(64,370); p.vertex(91,376); p.vertex(108,380); p.vertex(130,380); p.vertex(150,382); p.vertex(166,381); p.vertex(193,378);
+     p.vertex(217,374); p.vertex(229,376); p.vertex(252,379); p.vertex(279,386); p.vertex(310,393); p.vertex(324,393); p.vertex(341,394); p.vertex(365,392); p.vertex(381,388); p.vertex(390,383); p.vertex(400,386); p.vertex(400,400);
+    p.endShape(CLOSE);
 
    
     waveAngle += 0.025
@@ -1156,17 +1132,17 @@ draw = function() {
 
     //fala na wodzie
     for (var x = 0; x <= 400; x += 10) {
-        var y = waveAmplitude * sin(angle); //wzór na wyliczenie położenia współrzędnej y fali wodnej w danym punkcie x (sin(angle) zwraca wartości od -1 do 1 a waveamplitude je przeskalowuje)
+        var y = waveAmplitude * p.sin(angle); //wzór na wyliczenie położenia współrzędnej y fali wodnej w danym punkcie x (p.sin(angle) zwraca wartości od -1 do 1 a waveamplitude je przeskalowuje)
 
         //zmiana koloru wody w zależności od pory dnia
         if (isDay) {
-            fill(lerpColor(waterColor, waterNightColor, t));
+            p.fill(p.lerpColor(waterColor, waterNightColor, t));
         } else {
-            fill(lerpColor(waterNightColor, waterColor, t2));
+            p.fill(p.lerpColor(waterNightColor, waterColor, t2));
         }
 
         //kółka położone obok siebie poruszające się góra-dół imitują falę
-        ellipse(x, y + 155, 40, 50);
+        p.ellipse(x, y + 155, 40, 50);
 
         //przesunięcie kąta dla kolejnego punktu fali
         angle += waveAngleVelocity;
@@ -1184,15 +1160,15 @@ draw = function() {
         }
     }
 
-    var bubbleStroke = map(t, 0, 1, 255, 100);
-    var bubbleStroke2 = map(t2, 0, 1, 100, 255);
+    var bubbleStroke = p.map(t, 0, 1, 255, 100);
+    var bubbleStroke2 = p.map(t2, 0, 1, 100, 255);
     //bąbelki wodne
     if (isDay) {
-        fill(lerpColor(waterColor, waterNightColor, t));
-        stroke(255, 255, 255, bubbleStroke);
+        p.fill(p.lerpColor(waterColor, waterNightColor, t));
+        p.stroke(255, 255, 255, bubbleStroke);
     } else {
-        fill(lerpColor(waterNightColor, waterColor, t2));
-        stroke(255, 255, 255, bubbleStroke2);
+        p.fill(p.lerpColor(waterNightColor, waterColor, t2));
+        p.stroke(255, 255, 255, bubbleStroke2);
     }
     for (var i = 0; i < bubbles.length; i++) {
         bubbles[i].draw();
@@ -1206,38 +1182,38 @@ draw = function() {
     
     //kamienie
     if (isDay) {
-        fill(lerpColor(rockColor, rockNightColor, t));
+        p.fill(p.lerpColor(rockColor, rockNightColor, t));
     } else {
-        fill(lerpColor(rockNightColor, rockColor, t2));
+        p.fill(p.lerpColor(rockNightColor, rockColor, t2));
     }
-    noStroke();
+    p.noStroke();
     for (var i = 0; i < rocks.length; i++) {
-        rect(rocks[i].x, rocks[i].y, rocks[i].width, rocks[i].height, 50);
+        p.rect(rocks[i].x, rocks[i].y, rocks[i].width, rocks[i].height, 50);
         for (var j = 0; j < rocks.length; j++) { //pętla pomocnicza do sprawdzenia warunku
             if(i !== j && rocks[i].x < rocks[j].x + rocks[j].width && rocks[i].x + rocks[i].width > rocks[j].x){    //warunek sprawdzający czy kamienie się na siebie nie nakładają
-                rocks[i].x = processingInstance.random(10, 350);
-                rocks[j].x = processingInstance.random(10, 350);
+                rocks[i].x = p.random(10, 350);
+                rocks[j].x = p.random(10, 350);
             }
         }
     }
     
     //wodorosty
     rectMode(CENTER);
-    pushMatrix();
+    p.pushMatrix();
     if (isDay) {
-        fill(lerpColor(seaweedColor, seaweedNightColor, t));
+        p.fill(p.lerpColor(seaweedColor, seaweedNightColor, t));
     } else {
-        fill(lerpColor(seaweedNightColor, seaweedColor, t2));
+        p.fill(p.lerpColor(seaweedNightColor, seaweedColor, t2));
     }
-    translate(200, 200);
-    rotate(radians(90));
+    p.translate(200, 200);
+    p.rotate(p.radians(90));
     for (var i = 0; i < seaweed.length; i++) {
-        rect(seaweed[i].x, seaweed[i].y, seaweed[i].height, seaweed[i].width);
-        if (frameCount % 30 === 0 && processingInstance.random(0, 1) < 0.5) {  //wodorosty delikatnie się poruszają
-        seaweed[i].height += processingInstance.random(-10, 10);
+        p.rect(seaweed[i].x, seaweed[i].y, seaweed[i].height, seaweed[i].width);
+        if (p.frameCount % 30 === 0 && p.random(0, 1) < 0.5) {  //wodorosty delikatnie się poruszają
+        seaweed[i].height += p.random(-10, 10);
         }
     }
-    popMatrix();
+    p.popMatrix();
     rectMode(CORNER);
     
     //wywołanie funkcji rysującej wędkę
@@ -1284,21 +1260,21 @@ draw = function() {
 
     //wywołanie funkcji reset po złapaniu wszystkich ryb
     if(rod.fishCaught === fishNumber){ 
-        fill(0, 0, 0);
-        textSize(25);
-        text(`    Gratulacje\nZłapałeś ${fishNumber} ryb!`, 100, 160);
+        p.fill(0, 0, 0);
+        p.textSize(25);
+        p.text(`    Gratulacje\nZłapałeś ${fishNumber} ryb!`, 100, 160);
     
         reset();
     }
     
-    fill(0, 0, 0);
-    textSize(15);
-    text(`Złapane ryby: ${rod.fishCaught}`, 5, 15);
+    p.fill(0, 0, 0);
+    p.textSize(15);
+    p.text(`Złapane ryby: ${rod.fishCaught}`, 5, 15);
     
-        //console.log("keyPressed: ", keyPressed, "keyCode: ", keyCode);
+        //console.log("p.keyPressed: ", p.keyPressed, "p.keyCode: ", p.keyCode);
     
     //ruch żyłki w zależności od wciśniętej spacji
-    if (!gamePaused && keyPressed && keyCode === 32) {
+    if (!gamePaused && p.keyPressed && p.keyCode === 32) {
         rod.lineDown();
     } else if (!gamePaused) {
         rod.lineUp();
@@ -1308,11 +1284,10 @@ draw = function() {
 
 };
 
-const canvas = document.getElementById('mycanvas');
+const canvas = document.getElementById("mycanvas");
 
 if (canvas) {
-    const wrapped = createProcessingWrapper(Processing);
-    window.fishGameProcessingInstance = new Processing(canvas, wrapped(programCode));
+    window.fishGameProcessingInstance = new Processing(canvas, programCode);
     console.log("ProcessingJS instance created:", window.fishGameProcessingInstance);
 } else {
     console.log("Nie znaleziono <canvas id='mycanvas'>! Instancja gry nie została utworzona.");
