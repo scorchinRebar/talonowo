@@ -134,11 +134,13 @@ function openSite(nav) {
                       } else {
                         console.log('Creating Processing instance...');
                         const canvas = document.getElementById('mycanvas');
+                        console.log("Przed ifem: ", canvas);
                         if (canvas) {
+                          console.log("W ifie: ", canvas);
                           window.fishGameProcessingInstance = new Processing(canvas, programCode);
                           console.log("ProcessingJS instance created:", window.fishGameProcessingInstance);
                         } else {
-                         console.warn("Nie znaleziono <canvas id='mycanvas'>! Instancja gry nie została utworzona.");
+                         console.log("Nie znaleziono <canvas id='mycanvas'>! Instancja gry nie została utworzona.");
                         }
                       }
                     }, 500);
