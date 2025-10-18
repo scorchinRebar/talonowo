@@ -91,9 +91,14 @@ body {
   max-height: 41.5px;
 }
 
-#rulesIcon {width: 38px; transition: ease-in-out 0.3s;}
-#calcIcon {width: 30px; transition: ease-in-out 0.3s;}
-#authorsIcon {width: 50px; transition: ease-in-out 0.3s;}
+#rulesIcon {width: 38px;}
+#calcIcon {width: 29px;}
+#authorsIcon {width: 50px;}
+
+#rulesIcon, #calcIcon, #authorsIcon {
+  transition: ease-in-out 0.3s;
+  padding-top: 2px;
+}
 
 #nav1 { left: 0%; }
 #nav2 { left: 21%; }
@@ -163,14 +168,14 @@ body {
   justify-content: center;
   background-color: rgba(37, 37, 45);
   color: rgba(251, 202, 65);
-  border: 1px sandybrown solid;
+  border: 1px rgba(220, 162, 4) solid;
 }
 
 .calculatorWrapper {
   background-color: rgba(220, 162, 4);
-  border-radius: 50px;
-  width: 90%;
-  height: 95%;
+  border-radius: 13%;
+  width: 80%;
+  height: 90%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 10% repeat(5, 1fr);
@@ -187,12 +192,24 @@ body {
   padding: 20px;
 }
 
-input, select, option{
+.calculator input, .calculator select, .calculator option{
   border: 0;
   border-radius: 15px;
-  padding: 10px;
   background-color: rgba(6, 6, 8);
   color: rgb(220, 162, 4);
+}
+
+#z, #na {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(37, 37, 45);
+  font-size: 20px;
+  border-radius: 40px;
+}
+
+#z:hover, #na:hover{
+  cursor: pointer;
+  background-color: rgba(18, 18, 23);
 }
 
 .calculatorDivs {
@@ -204,8 +221,20 @@ input, select, option{
   justify-content: center;
   align-items: center;
   background-color: rgba(37, 37, 45);
+  color: rgb(220, 162, 4);
+  border: 0;
   border-radius: 40px;
   font-size: 25px;
+}
+
+.calculatorDivs:hover:not(.display) {
+  cursor: pointer;
+  background-color: rgba(18, 18, 23);
+}
+
+.calculatorDivs select:hover {
+  cursor: pointer;
+  background-color: rgba(18, 18, 23);
 }
 
 .display{
@@ -216,6 +245,7 @@ input, select, option{
   font-size: 28px;
   padding-left: 15px;
 }
+
 .button1{grid-area: button1;}
 .button2{grid-area: button2;}
 .button3{grid-area: button3;}
@@ -226,10 +256,9 @@ input, select, option{
 .button8{grid-area: button8;}
 .button9{grid-area: button9;}
 .button0{grid-area: button0;}
-.buttonZ{grid-area: buttonZ;}
-.buttonNa{grid-area: buttonNa;}
+.buttonZ{grid-area: buttonZ; width: 100%;}
+.buttonNa{grid-area: buttonNa; width: 100%;}
 .buttonCalc{grid-area: buttonCalc;}
-
 
 /* RYBY.HTML */
 

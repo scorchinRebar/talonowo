@@ -1,4 +1,5 @@
 <div class="calculator">
+  <h1>Przelicznik walutowy</h1>
    <div class="calculatorWrapper">
     <input type="number" min="1" class="calculatorDivs display" id="wynik" placeholder="Ilość..."></input>
     <div class="calculatorDivs button7">7</div>
@@ -11,23 +12,26 @@
     <div class="calculatorDivs button2">2</div>
     <div class="calculatorDivs button3">3</div>
     <div class="calculatorDivs button0">0</div>
+
     <div class="calculatorDivs buttonZ">
-      <label for="z">Z:</label>
       <select id="z">
+        <option value="" disabled selected>Z:</option>
         <option value="talon">Talon</option>
         <option value="taloniasz">Taloniasz</option>
         <option value="talonior">Talonior</option>
-      </select><br>
+      </select>
     </div>
+
     <div class="calculatorDivs buttonNa">
-      <label for="na">Na:</label>
       <select id="na">
+        <option value="" disabled selected>Na:</option>
         <option value="talon">Talon</option>
         <option value="taloniasz">Taloniasz</option>
         <option value="talonior">Talonior</option>
-      </select><br>
+      </select>
     </div>
-    <div onclick="przelicz()" class="calculatorDivs buttonCalc">Przelicz</div>
+
+    <button onclick="przelicz()" class="calculatorDivs buttonCalc">Przelicz</button>
   </div>
 </div>
 
