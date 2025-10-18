@@ -37,7 +37,6 @@ function openSite(nav) {
       scripts.forEach(script => script.remove());
 
       delete window.canvas;
-      delete window.programCode;
 
       console.log('Stara instancja gry została zatrzymana.');
     }

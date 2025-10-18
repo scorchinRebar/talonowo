@@ -1,6 +1,5 @@
- console.log('Processing global?', typeof Processing);
- //WŁASNOŚĆ PATRYKA P. AKA majomajo112 ALL RIGHTS RESERVED
- // Funkcja programCode zawiera kod programu napisanego w języku Processing
+//WŁASNOŚĆ PATRYKA P. AKA majomajo112 ALL RIGHTS RESERVED
+// Funkcja programCode zawiera kod programu napisanego w języku Processing
 var programCode = function(p) {
     // Ustawienie rozmiaru płótna na 400x400 pikseli
     p.size(400, 400);
@@ -1284,9 +1283,8 @@ p.draw = function() {
 
 };
 
-const canvas = document.getElementById("mycanvas");
-
-if (canvas) {
+if (!canvas) {
+    window.canvas = document.getElementById("mycanvas");
     window.fishGameProcessingInstance = new Processing(canvas, programCode);
     console.log("ProcessingJS instance created:", window.fishGameProcessingInstance);
 } else {
