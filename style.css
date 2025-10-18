@@ -166,13 +166,69 @@ body {
   border: 1px sandybrown solid;
 }
 
-input, select, option, #calc {
+.calculatorWrapper {
+  background-color: rgba(220, 162, 4);
+  border-radius: 50px;
+  width: 90%;
+  height: 95%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 10% repeat(5, 1fr);
+  grid-template-areas:
+  'display display display'
+  'button7 button8 button9'
+  'button4 button5 button6'
+  'button1 button2 button3'
+  '. button0 .'
+  'buttonZ buttonNa buttonCalc';
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 20px;
+}
+
+input, select, option{
   border: 0;
   border-radius: 15px;
   padding: 10px;
   background-color: rgba(6, 6, 8);
   color: rgb(220, 162, 4);
 }
+
+.calculatorDivs {
+  width: 70%;
+  height: 80%;
+  place-self: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(37, 37, 45);
+  border-radius: 40px;
+  font-size: 25px;
+}
+
+.display{
+  grid-area: display; 
+  background-color: rgba(6, 6, 8);
+  width: 100%;
+  height: 100%;
+  font-size: 28px;
+  padding-left: 15px;
+}
+.button1{grid-area: button1;}
+.button2{grid-area: button2;}
+.button3{grid-area: button3;}
+.button4{grid-area: button4;}
+.button5{grid-area: button5;}
+.button6{grid-area: button6;}
+.button7{grid-area: button7;}
+.button8{grid-area: button8;}
+.button9{grid-area: button9;}
+.button0{grid-area: button0;}
+.buttonZ{grid-area: buttonZ;}
+.buttonNa{grid-area: buttonNa;}
+.buttonCalc{grid-area: buttonCalc;}
 
 
 /* RYBY.HTML */
