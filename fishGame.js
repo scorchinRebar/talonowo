@@ -1280,11 +1280,11 @@ p.draw = function() {
     }
 };
 
-
 };
 
-if (!canvas) {
-    window.canvas = document.getElementById("mycanvas");
+window.canvas = document.getElementById("mycanvas");
+
+if (window.canvas) {
     window.fishGameProcessingInstance = new Processing(canvas, programCode);
     console.log("ProcessingJS instance created:", window.fishGameProcessingInstance);
 } else {
