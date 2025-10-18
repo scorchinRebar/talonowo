@@ -17,25 +17,27 @@ function openSite(nav) {
 
       // zatrzymanie audio
       requestAnimationFrame(function() {
-
           window.dayMusic.currentTime = 0;
           window.dayMusic.pause();
 
           window.nightMusic.currentTime = 0;
           window.nightMusic.pause();
 
-          window.fanfare = window.fanfare.currentTime = 0;
-          window.fanfare = window.fanfare.pause();
+          window.fanfare.currentTime = 0;
+          window.fanfare.pause();
 
-          window.reeling = window.reeling.currentTime = 0;
-          window.reeling = window.reeling.pause();
+          window.reeling.currentTime = 0;
+          window.reeling.pause();
 
-          window.Bubbles = window.Bubbles.currentTime = 0;
-          window.Bubbles = window.Bubbles.pause();
+          window.Bubbles.currentTime = 0;
+          window.Bubbles.pause();
         });
 
       let scripts = document.body.querySelectorAll('script.dynamic-script');
       scripts.forEach(script => script.remove());
+
+      delete window.canvas;
+      delete window.programCode;
 
       console.log('Stara instancja gry została zatrzymana.');
     }
