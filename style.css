@@ -169,6 +169,7 @@ body {
   background-color: rgba(37, 37, 45);
   color: rgba(251, 202, 65);
   border: 1px rgba(220, 162, 4) solid;
+  text-align: center;
 }
 
 .calculatorWrapper {
@@ -184,7 +185,7 @@ body {
   'button7 button8 button9'
   'button4 button5 button6'
   'button1 button2 button3'
-  '. button0 .'
+  '. button0 buttonClear'
   'buttonZ buttonNa buttonCalc';
   justify-content: center;
   align-items: center;
@@ -225,6 +226,7 @@ body {
   border: 0;
   border-radius: 40px;
   font-size: 25px;
+  word-break: break-all;
 }
 
 .calculatorDivs:hover:not(.display) {
@@ -237,12 +239,12 @@ body {
   background-color: rgba(18, 18, 23);
 }
 
-.display{
+.display, .displayTax{
   grid-area: display; 
   background-color: rgba(6, 6, 8);
   width: 100%;
   height: 100%;
-  font-size: 28px;
+  font-size: 13px;
   padding-left: 15px;
 }
 
@@ -259,6 +261,7 @@ body {
 .buttonZ{grid-area: buttonZ; width: 100%;}
 .buttonNa{grid-area: buttonNa; width: 100%;}
 .buttonCalc{grid-area: buttonCalc;}
+.buttonClear{grid-area: buttonClear; color: red; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif};
 
 /* RYBY.HTML */
 

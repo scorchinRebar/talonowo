@@ -97,6 +97,13 @@ function openSite(nav) {
                   buttonClick(this);
                 });
               });
+
+              let buttonsTax = document.querySelectorAll('.calcButtonsTax');
+              buttonsTax.forEach(buttonTax => {
+                buttonTax.addEventListener('click', function() {
+                  buttonTaxClick(this);
+                });
+              });
             });
         });
         break;
@@ -195,7 +202,7 @@ function przelicz() {
 }
 
 function przeliczPodatek() {
-  const ilosc = parseFloat(document.getElementById("ilosc").value);
+  const ilosc = parseFloat(document.getElementById("iloscPodatek").value);
   const walutaZ = document.getElementById("zPodatek").value;
   const walutaNa = document.getElementById("naPodatek").value;
   const poleWyniku = document.getElementById("iloscPodatek");
@@ -234,7 +241,7 @@ function przeliczPodatek() {
   const procent = podatekProcent * 100;
 
   poleWyniku.value = ''
-  poleWyniku.placeholder = `${ilosc} ${walutaZ} = ${zaokraglonyWynik} ${walutaNa} (potrącono ${zaokraglonyPodatek} ${walutaNa}, czyli ${procent}% podatku)`;
+  poleWyniku.placeholder = `${ilosc} ${walutaZ} = ${zaokraglonyWynik} ${walutaNa} (potrącono ${procent}% podatku - ${zaokraglonyPodatek} ${walutaNa})`;
 }
 
 
@@ -243,4 +250,15 @@ function buttonClick(button) {
   const poleWyniku = document.getElementById("ilosc");
 
   poleWyniku.value += buttonContent;
+}
+
+function buttonTaxClick(buttonTax) {
+  let buttonTaxContent = buttonTax.textContent;
+  const poleWyniku = document.getElementById("iloscPodatek");
+
+  poleWyniku.value += buttonTaxContent;
+}
+
+function clearDisplay(buttonClear) {
+  buttonClear.parentElement.firstElementChild.value = ''; //cofamy sie do rodzica po czym wybieramy pierwsze dziecko czyli display
 }
