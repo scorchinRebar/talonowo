@@ -90,6 +90,13 @@ function openSite(nav) {
               slider.style.clipPath = 'inset(0% 73% 90% 20%)'
               document.getElementById('mainContent').innerHTML = data;
               document.getElementById('slider').innerHTML = '';
+
+              let buttons = document.querySelectorAll('.calcButtons');
+              buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                  buttonClick(this);
+                });
+              });
             });
         });
         break;
@@ -163,26 +170,77 @@ function openSite(nav) {
 }
 
 function przelicz() {
-    const ilosc = parseInt(document.getElementById("ilosc").value);
-    const walutaZ = document.getElementById("z").value;
-    const walutaNa = document.getElementById("na").value;
-    const poleWyniku = document.getElementById("wynik");
+  const ilosc = parseInt(document.getElementById("ilosc").value);
+  const walutaZ = document.getElementById("z").value;
+  const walutaNa = document.getElementById("na").value;
+  const poleWyniku = document.getElementById("ilosc");
 
-    let wynik;
+  let wynik;
 
-    if (walutaZ === "taloniasz" && walutaNa === "talon") {
-      wynik = ilosc * 2; 
-    } else if (walutaZ === "talonior" && walutaNa === "taloniasz") {
-      wynik = ilosc * 2; 
-    } else if (walutaZ === "talonior" && walutaNa === "talon") {
-      wynik = ilosc * 4; 
-    } else if (walutaZ === walutaNa) {
-      wynik = ilosc; 
-    } else {
-      poleWyniku.textContent = "Sorry, chyba zapomiałeś zasad wymian walut. Idz se przypomnij";
-      return;
-    }
-
-    poleWyniku.textContent = `${ilosc} ${walutaZ} = ${wynik} ${walutaNa}`;
+  if (walutaZ === "taloniasz" && walutaNa === "talon") {
+    wynik = ilosc * 2; 
+  } else if (walutaZ === "talonior" && walutaNa === "taloniasz") {
+    wynik = ilosc * 2; 
+  } else if (walutaZ === "talonior" && walutaNa === "talon") {
+    wynik = ilosc * 4; 
+  } else if (walutaZ === walutaNa) {
+    wynik = ilosc; 
+  } else {
+    poleWyniku.value = ''
+    poleWyniku.placeholder = "Sorry, chyba zapomiałeś zasad wymian walut. Idz se przypomnij";
+    return;
+  }
+  poleWyniku.value = ''
+  poleWyniku.placeholder = `${ilosc} ${walutaZ} = ${wynik} ${walutaNa}`;
 }
 
+function przeliczPodatek() {
+  const ilosc = parseFloat(document.getElementById("ilosc").value);
+  const walutaZ = document.getElementById("zPodatek").value;
+  const walutaNa = document.getElementById("naPodatek").value;
+  const poleWyniku = document.getElementById("iloscPodatek");
+
+  if (!ilosc || ilosc <= 0) {
+    poleWyniku.textContent = "dawaj kase a nie";
+    return;
+  }
+
+  let wynik;
+  let podatekProcent;
+
+  if (walutaZ === "taloniasz" && walutaNa === "talon") {
+    wynik = ilosc * 2;
+    podatekProcent = 0.10; // 10%
+  } else if (walutaZ === "talonior" && walutaNa === "taloniasz") {
+    wynik = ilosc * 2;
+    podatekProcent = 0.25; // 25%
+  } else if (walutaZ === "talonior" && walutaNa === "talon") {
+    wynik = ilosc * 4;
+    podatekProcent = 0.50; // 50%
+  } else if (walutaZ === walutaNa) {
+    wynik = ilosc;
+    podatekProcent = 0; // brak podatku
+  } else {
+    poleWyniku.value = ''
+    poleWyniku.placeholder = "przeczytaj regulamin.";
+    return;
+  }
+
+  const podatek = wynik * podatekProcent;
+  const wynikPoPodatku = wynik - podatek;
+
+  const zaokraglonyWynik = wynikPoPodatku.toFixed(2);
+  const zaokraglonyPodatek = podatek.toFixed(2);
+  const procent = podatekProcent * 100;
+
+  poleWyniku.value = ''
+  poleWyniku.placeholder = `${ilosc} ${walutaZ} = ${zaokraglonyWynik} ${walutaNa} (potrącono ${zaokraglonyPodatek} ${walutaNa}, czyli ${procent}% podatku)`;
+}
+
+
+function buttonClick(button) {
+  let buttonContent = button.textContent;
+  const poleWyniku = document.getElementById("ilosc");
+
+  poleWyniku.value += buttonContent;
+}
