@@ -69,7 +69,26 @@ function openSite(nav) {
         break;
 
     case 'nav2':
-        // window.location.href = '';
+      currentNav = 'nav2'
+      slider.style.clipPath = 'inset(0% 60% 90% 33%)'
+        fetch ('wykres.html')
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById('slider').innerHTML = data;
+
+            slider.style.transitionDuration = '1s';
+            slider.style.transform = 'translateY(17.6%)'
+            slider.style.clipPath = 'inset(0% 0% 0% 0%)'
+
+            slider.addEventListener('transitionend', () => {
+              slider.style.transitionDuration = '0s';
+              slider.style.transform = 'translateY(-30%)';
+              slider.style.clipPath = 'inset(0% 60% 90% 33%)' //to mozna chyba wywalić
+              document.getElementById('mainContent').innerHTML = data;
+              document.getElementById('slider').innerHTML = '';
+              chart();
+            });
+        });
         break;
 
     case 'nav3':
@@ -262,3 +281,75 @@ function buttonTaxClick(buttonTax) {
 function clearDisplay(buttonClear) {
   buttonClear.parentElement.firstElementChild.value = ''; //cofamy sie do rodzica po czym wybieramy pierwsze dziecko czyli display
 }
+
+
+// WYKRES GIEŁDA
+
+function chart() {
+  const ctx = document.getElementById('wykres').getContext('2d');
+
+  const dane = {
+    labels: [],
+    datasets: [{
+      label: 'Kurs talona',
+      data: [],
+      borderColor: '#FFA500', 
+      borderWidth: 2,
+      tension: 0.3,
+      fill: false,
+      pointRadius: 0 
+    }]
+  };
+
+  const opcje = {
+    responsive: true,
+    scales: {
+      x: {
+        ticks: { color: '#fbca41' }, 
+        grid: { color: '#333' }       
+      },
+      y: {
+        ticks: { color: '#fbca41' }, 
+        grid: { color: '#333' }
+      }
+    },
+    plugins: {
+      legend: {
+        labels: { color: '#f0f0f0' }
+      }
+    }
+  };
+
+  const wykres = new Chart(ctx, {
+    type: 'line',
+    data: dane,
+    options: opcje
+  });
+
+  let aktualnyKurs = 100;
+
+  function dodajNowyPunkt() {
+    const czas = new Date().toLocaleTimeString('pl-PL', {
+      hour12: false,
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    });
+
+    const zmiana = (Math.random() - 0.5) * 10; 
+    aktualnyKurs = Math.max(aktualnyKurs + zmiana, 1);
+
+    dane.labels.push(czas);
+    dane.datasets[0].data.push(aktualnyKurs);
+      
+    wykres.update();
+    
+    if (dane.labels.length > 20) {
+      dane.labels.splice(0, 1);
+      dane.datasets[0].data.splice(0, 1);
+    }
+  }
+
+  setInterval(dodajNowyPunkt, 2000);
+}
+

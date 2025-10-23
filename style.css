@@ -156,6 +156,23 @@ body {
   cursor: pointer;
 }
 
+/* WYKRES.HTML */
+
+#chartDiv {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+#chartDiv h1 {
+  padding-bottom: 30px;
+}
+
+#wykres {
+  
+}
 
 /* KALKULATOR.HTML */
 
