@@ -170,10 +170,6 @@ body {
   padding-bottom: 30px;
 }
 
-#wykres {
-  
-}
-
 /* KALKULATOR.HTML */
 
 .calculator {
@@ -278,7 +274,7 @@ body {
 .buttonZ{grid-area: buttonZ; width: 100%;}
 .buttonNa{grid-area: buttonNa; width: 100%;}
 .buttonCalc{grid-area: buttonCalc;}
-.buttonClear{grid-area: buttonClear; color: red; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif};
+.buttonClear{grid-area: buttonClear; color: red; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
 
 /* RYBY.HTML */
 
