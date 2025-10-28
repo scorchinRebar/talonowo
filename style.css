@@ -55,6 +55,22 @@ body {
   border-radius: 0 0 40px 40px;
 }
 
+#logo {
+  position: absolute;
+  right: 3%;
+  top: 10%;
+  z-index: 30;
+  width: 10%;
+  height: 80%;
+  transform: rotate(-10deg);
+}
+
+#logo img {
+  width: 100%;
+  height: 100%;
+  z-index: 30;
+}
+
 #navGroup {
   width: 64%;
   height: 100%;
@@ -93,9 +109,10 @@ body {
 
 #rulesIcon {width: 38px;}
 #calcIcon {width: 29px;}
+#gameIcon {width: 40px;}
 #authorsIcon {width: 50px;}
 
-#rulesIcon, #calcIcon, #authorsIcon {
+#rulesIcon, #calcIcon, #gameIcon, #authorsIcon {
   transition: ease-in-out 0.3s;
   padding-top: 2px;
 }
@@ -114,6 +131,7 @@ body {
 
 .nav:hover #rulesIcon {width: 100px; padding-top: 5px;}
 .nav:hover #calcIcon {width: 77px; padding-top: 5px;}
+.nav:hover #gameIcon {width: 100px; padding-top: 5px;}
 .nav:hover #authorsIcon {width: 120px; padding-top: 5px;}
 
 /* koniec batalii*/
