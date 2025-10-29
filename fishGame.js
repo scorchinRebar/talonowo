@@ -6,7 +6,8 @@ var programCode = function(p) {
     // Ustawienie liczby klatek na sekundę (60 FPS)
     p.frameRate(60);
     // W tym miejscu możesz wkleić kod napisany w języku Processing z Khan Academy:
-console.log("FishGame loaded — Processing in window?", typeof Processing);
+    console.log("FishGame loaded — Processing in window?", typeof Processing);
+
     /* Lista zmian/dodatków względem pierwszej wersji gry:
         - pobranie biblioteki processingJS w celu obsługi gry offline ✔
         - obniżenie poziomu wody i ludzika w celu większego miejsca na krajobraz i niebo ✔
@@ -37,16 +38,21 @@ window.Bubbles = window.Bubbles || new Audio('data/bubbles.mp3')
 window.reeling.volume = 0.2;
 
 //Zdjęcia ryb
-let fish1 = p.loadImage("data/fish1.png");
-let fish2 = p.loadImage("data/fish2.png");
-let fish3 = p.loadImage("data/fish3.png");
-let fish4 = p.loadImage("data/fish4.png");
-let fish5 = p.loadImage("data/fish5.png");
-let fish6 = p.loadImage("data/fish6.png");
-let fish7 = p.loadImage("data/fish7.png");
-let fish8 = p.loadImage("data/fish8.png");
-let fish9 = p.loadImage("data/fish9.png");
-let fish10 = p.loadImage("data/fish10.png");
+dayFishImages = [
+    p.loadImage("data/fish1.png"),
+    p.loadImage("data/fish2.png"),
+    p.loadImage("data/fish3.png"),
+    p.loadImage("data/fish4.png"),
+    p.loadImage("data/fish5.png")
+];
+
+nightFishImages = [
+    p.loadImage("data/fish6.png"),
+    p.loadImage("data/fish7.png"),
+    p.loadImage("data/fish8.png"),
+    p.loadImage("data/fish9.png"),
+    p.loadImage("data/fish10.png")
+];
 
 //konstruktor wędki
 var Rod = function() {
@@ -255,9 +261,8 @@ var Fish = function() {
     this.swimmingStates = ['slowSwim', 'mediumSwim', 'fastSwim']; //tablica z różnymi stanami prędkości ryb
     this.randomSwim = 'fastSwim'; //początkowy stan prędkości ryby
 
-    this.eyeX = 17;
-    this.bodyColor = p.color(p.random(100, 255), p.random(50, 150), p.random(50, 150)); //ryba posiada losowe ubarwienie
-    this.finColor = p.color(p.random(50, 150), p.random(150, 255), p.random(100, 255));
+    this.eyeX = 23;
+    this.image = dayFishImages.splice(Math.floor(p.random(dayFishImages.length)), 1)[0]; //kazda ryba ma inny image
     this.direction = new p.PVector(p.random(1) < 0.5 ? -1 : 1, p.random(1) < 0.5 ? -1 : 1); //warunek wybiera początkowy kierunek ruchu ryby: 1 - prawo/góra lub -1 - lewo/dół
 
     this.fishHooked = false;    //flaga używana do sprawdzenia czy ryba jest zahaczona
@@ -276,14 +281,13 @@ Fish.prototype.draw = function() {
     p.rotate(this.angle);  //obrót ryby w kierunku, w którym płynie
     p.scale(this.size, this.size * this.direction.x);  //Jeśli ryba płynie w lewo, jej skala w osi Y musi zostać pomnożona przez -1 aby ryba nie płynęła do góry (płetwami?) (skala ryby jest na minusie - obraca się poprzez lustrzane odbicie)
 
-    //tułów
-    if (fish1) {
-        p.imageMode(p.CENTER);
-        p.image(fish1, 0, 0, 100, 50);
-    }
+    //ciało ryby
+    p.imageMode(p.CENTER);
+    p.image(this.image, 0, 0, 50, 25);
+    
     //oko
     p.fill(0, 0, 0);
-    p.ellipse(this.eyeX, -1.5, 2, 2);
+    p.ellipse(this.eyeX, 1, 2, 2);
 
     p.popMatrix();
 };
@@ -414,7 +418,7 @@ Fish.prototype.isHooked = function(rod, index) {
     var rotatedEyeY = this.position.y + (eyeOffsetX * p.sin(this.angle) + eyeOffsetY * p.cos(this.angle));    //obliczenie y'
 
     //Sprawdzanie, czy haczyk i oko ryby są w odpowiedniej odległości
-    if (p.dist(rod.hookPos.x, rod.hookPos.y, rotatedEyeX, rotatedEyeY) < 5) {   //punktem zahaczenia haczyka jest oko ryby
+    if (p.dist(rod.hookPos.x, rod.hookPos.y, rotatedEyeX, rotatedEyeY) < 5) {   //punktem zahaczenia haczyka jest oko ryby (UWAGA - W WERSJI "TalonCatch" GRY PUNKTEM ZAHACZENIA JEST BUZIA RYBY)
         this.hooked(rod, index);    //Wywołanie funkcji, jeśli haczyk jest w pobliżu
     }
 };
@@ -459,8 +463,8 @@ Fish.prototype.miniGame = function(rod, index) {
         p.rect(50, 300, greenRect, 50);   //zielony pasek
         greenRect = p.constrain(greenRect, 0, 300);   //zielony pasek nie może wychodzić poza pasek biały
 
-        if (p.frameCount % 10 === 0) {
-            greenRect -= 2.3 * this.size; //im większa ryba tym ciężej ją wyłowić - pasek szybciej idzie w lewo
+        if (p.frameCount % 5 === 0) {
+            greenRect -= 2 * this.size; //im większa ryba tym ciężej ją wyłowić - pasek szybciej idzie w lewo
         }
 
         if (p.keyPressed && p.keyCode === 32) {
@@ -515,8 +519,7 @@ var NightFish = function() {
 
     this.position = new p.PVector(p.random(460, 480), p.random(170, 380)); // ryby nocne na początku gry są poza płótnem
 
-    this.bodyColor = p.color(p.random(20, 100), p.random(10, 80), p.random(10, 80)); //ryby nocne mają ciemniejsze kolory
-    this.finColor = p.color(p.random(10, 80), p.random(80, 200), p.random(50, 200));
+    this.image = nightFishImages.splice(Math.floor(p.random(nightFishImages.length)), 1)[0]; //kazda ryba ma inny image
 
     this.nightFishAway = false; //flaga używana do sprawdzenia czy na płótnie jest odpowiedni rodzaj ryby
 };
@@ -606,8 +609,8 @@ NightFish.prototype.miniGame = function(rod, index) {
 
         greenRect = p.constrain(greenRect, 0, 300);   //zielony pasek nie może wychodzić poza pasek biały
     
-        if (p.frameCount % 10 === 0) {
-            greenRect -= 2.3 * this.size; //im większa ryba tym ciężej ją wyłowić - pasek szybciej idzie w lewo
+        if (p.frameCount % 5 === 0) {
+            greenRect -= 2 * this.size; //im większa ryba tym ciężej ją wyłowić - pasek szybciej idzie w lewo
         }
 
         if (p.keyPressed && p.keyCode === 32) {
@@ -832,7 +835,7 @@ day = function(){
     p.translate(0, -60);
     p.fill(p.lerpColor(landscapeColor, landscapeNightColor, t));
     p.beginShape();   //krajobraz
-    p.vertex(0, 265); p.vertex(0, 131); p.vertex(36, 134); p.vertex(77, 143); p.vertex(132, 157); p.vertex(179, 138); p.vertex(218, 125);
+     p.vertex(0, 265); p.vertex(0, 131); p.vertex(36, 134); p.vertex(77, 143); p.vertex(132, 157); p.vertex(179, 138); p.vertex(218, 125);
      p.vertex(271, 131); p.vertex(320, 131); p.vertex(348, 145); p.vertex(400, 148); p.vertex(400, 242);
     p.endShape(p.CLOSE);
     p.popMatrix();
@@ -1013,6 +1016,22 @@ reset = function() {
         sunX = 438;
         moonX = 420;
 
+        dayFishImages = [
+            p.loadImage("data/fish1.png"),
+            p.loadImage("data/fish2.png"),
+            p.loadImage("data/fish3.png"),
+            p.loadImage("data/fish4.png"),
+            p.loadImage("data/fish5.png")
+        ];
+
+        nightFishImages = [
+            p.loadImage("data/fish6.png"),
+            p.loadImage("data/fish7.png"),
+            p.loadImage("data/fish8.png"),
+            p.loadImage("data/fish9.png"),
+            p.loadImage("data/fish10.png")
+        ];
+
         fish = []; //usuwa poprzednie ryby
         for (var i = 0; i < fishNumber/2; i++) {
             fish.push(new Fish());  //tworzy nowe ryby
@@ -1022,7 +1041,7 @@ reset = function() {
         for (var i = 0; i < fishNumber/2; i++) {
             nightFish.push(new NightFish());  //tworzy nowe ryby nocne
         }
-
+        
         console.log("Game has been reset!");
     }
 };
