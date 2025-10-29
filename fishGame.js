@@ -36,6 +36,18 @@ window.Bubbles = window.Bubbles || new Audio('data/bubbles.mp3')
 
 window.reeling.volume = 0.2;
 
+//Zdjęcia ryb
+let fish1 = p.loadImage("data/fish1.png");
+let fish2 = p.loadImage("data/fish2.png");
+let fish3 = p.loadImage("data/fish3.png");
+let fish4 = p.loadImage("data/fish4.png");
+let fish5 = p.loadImage("data/fish5.png");
+let fish6 = p.loadImage("data/fish6.png");
+let fish7 = p.loadImage("data/fish7.png");
+let fish8 = p.loadImage("data/fish8.png");
+let fish9 = p.loadImage("data/fish9.png");
+let fish10 = p.loadImage("data/fish10.png");
+
 //konstruktor wędki
 var Rod = function() {
     this.RodPos = new p.PVector(-60, 140);    //własności wędziska    (new p.PVector(x, y) - jedna zmienna przechowuje dwie współrzędne (punkt))
@@ -265,20 +277,15 @@ Fish.prototype.draw = function() {
     p.scale(this.size, this.size * this.direction.x);  //Jeśli ryba płynie w lewo, jej skala w osi Y musi zostać pomnożona przez -1 aby ryba nie płynęła do góry (płetwami?) (skala ryby jest na minusie - obraca się poprzez lustrzane odbicie)
 
     //tułów
-    p.stroke(0, 0, 0);
-    p.fill(this.bodyColor);
-    p.bezier(0, 0.3, 15, -7.5, 20, -7.5, 20, 0.3);
-    p.bezier(0, -0.3, 15, 10, 20, 7.5, 20, -0.3);
-
+    if (fish1) {
+        p.imageMode(p.CENTER);
+        p.image(fish1, 0, 0, 100, 50);
+    }
     //oko
     p.fill(0, 0, 0);
     p.ellipse(this.eyeX, -1.5, 2, 2);
 
-    //ogon
-    p.fill(this.finColor);
-    p.bezier(-5, -6, 2, 0, 2, 0, -5, 4);
-    p.noStroke();
-    p.popMatrix(); 
+    p.popMatrix();
 };
 
 //funkcja odpowiedzialna za ruch ryb
@@ -1261,14 +1268,14 @@ p.draw = function() {
     if(rod.fishCaught === fishNumber){ 
         p.fill(0, 0, 0);
         p.textSize(25);
-        p.text(`    Gratulacje\nZłapałeś ${fishNumber} ryb!`, 100, 160);
+        p.text(`    Gratulacje\nZłapałeś ${fishNumber} talonoryb!`, 100, 160);
     
         reset();
     }
     
     p.fill(0, 0, 0);
     p.textSize(15);
-    p.text(`Złapane ryby: ${rod.fishCaught}`, 5, 15);
+    p.text(`Złapane talonoryby: ${rod.fishCaught}`, 5, 15);
     
         //console.log("p.keyPressed: ", p.keyPressed, "p.keyCode: ", p.keyCode);
     
@@ -1290,4 +1297,3 @@ if (window.canvas) {
 } else {
     console.log("Nie znaleziono <canvas id='mycanvas'>! Instancja gry nie została utworzona.");
 }
-
