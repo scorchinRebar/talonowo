@@ -200,7 +200,8 @@ function przelicz() {
   const walutaZ = document.getElementById("z").value;
   const walutaNa = document.getElementById("na").value;
   const poleWyniku = document.getElementById("ilosc");
-
+  poleWyniku.style.fontSize = '13px';
+  
   let wynik;
 
   if (walutaZ === "taloniasz" && walutaNa === "talon") {
@@ -225,6 +226,7 @@ function przeliczPodatek() {
   const walutaZ = document.getElementById("zPodatek").value;
   const walutaNa = document.getElementById("naPodatek").value;
   const poleWyniku = document.getElementById("iloscPodatek");
+  poleWyniku.style.fontSize = '13px';
 
   if (!ilosc || ilosc <= 0) {
     poleWyniku.textContent = "dawaj kase a nie";
@@ -267,6 +269,7 @@ function przeliczPodatek() {
 function buttonClick(button) {
   let buttonContent = button.textContent;
   const poleWyniku = document.getElementById("ilosc");
+  poleWyniku.style.fontSize = '35px';
 
   poleWyniku.value += buttonContent;
 }
@@ -274,12 +277,15 @@ function buttonClick(button) {
 function buttonTaxClick(buttonTax) {
   let buttonTaxContent = buttonTax.textContent;
   const poleWyniku = document.getElementById("iloscPodatek");
+  poleWyniku.style.fontSize = '35px';
 
   poleWyniku.value += buttonTaxContent;
 }
 
 function clearDisplay(buttonClear) {
-  buttonClear.parentElement.firstElementChild.value = ''; //cofamy sie do rodzica po czym wybieramy pierwsze dziecko czyli display
+  buttonClear.parentElement.firstElementChild.value = ''; //cofamy sie do rodzica (calculatorWrapper) po czym wybieramy pierwsze dziecko czyli display
+  buttonClear.parentElement.firstElementChild.fontSize = '35px';
+  buttonClear.parentElement.firstElementChild.placeholder = 'Ilość...';
 }
 
 

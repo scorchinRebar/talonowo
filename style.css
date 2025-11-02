@@ -108,11 +108,12 @@ body {
 }
 
 #rulesIcon {width: 38px;}
+#chartIcon {width: 40px;}
 #calcIcon {width: 29px;}
 #gameIcon {width: 40px;}
 #authorsIcon {width: 50px;}
 
-#rulesIcon, #calcIcon, #gameIcon, #authorsIcon {
+#rulesIcon, #chartIcon, #calcIcon, #gameIcon, #authorsIcon {
   transition: ease-in-out 0.3s;
   padding-top: 2px;
 }
@@ -130,6 +131,7 @@ body {
 }
 
 .nav:hover #rulesIcon {width: 100px; padding-top: 5px;}
+.nav:hover #chartIcon {width: 105px; padding-top: 5px;}
 .nav:hover #calcIcon {width: 77px; padding-top: 5px;}
 .nav:hover #gameIcon {width: 100px; padding-top: 5px;}
 .nav:hover #authorsIcon {width: 120px; padding-top: 5px;}
@@ -256,11 +258,11 @@ body {
   color: rgb(220, 162, 4);
   border: 0;
   border-radius: 40px;
-  font-size: 25px;
+  font-size: 35px;
   word-break: break-all;
 }
 
-.calculatorDivs:hover:not(.display) {
+.calculatorDivs:hover:not(.display, .displayTax) {
   cursor: pointer;
   background-color: rgba(18, 18, 23);
 }
@@ -275,7 +277,7 @@ body {
   background-color: rgba(6, 6, 8);
   width: 100%;
   height: 100%;
-  font-size: 13px;
+  font-size: 35px;
   padding-left: 15px;
 }
 
@@ -291,7 +293,7 @@ body {
 .button0{grid-area: button0;}
 .buttonZ{grid-area: buttonZ; width: 100%;}
 .buttonNa{grid-area: buttonNa; width: 100%;}
-.buttonCalc{grid-area: buttonCalc;}
+.buttonCalc{grid-area: buttonCalc; font-size: 25px;}
 .buttonClear{grid-area: buttonClear; color: red; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;}
 
 /* RYBY.HTML */
